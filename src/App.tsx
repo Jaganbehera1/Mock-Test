@@ -3,6 +3,8 @@ import { GraduationCap, Shield, Home, LockKeyhole, Mail, Eye, EyeOff, AlertCircl
 import { LandingPage } from "@/components/LandingPage";
 import { StudentFlow } from "@/components/StudentFlow";
 import { AdminPanel } from "@/components/AdminPanel";
+import { firebaseAuth } from "@/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 type View = "landing" | "student" | "admin";
 
@@ -50,19 +52,15 @@ function AdminLogin({ onAuthenticated }: { onAuthenticated: () => void }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (
-      email.trim().toLowerCase() === import.meta.env.VITE_ADMIN_EMAIL.toLowerCase() &&
-      password === import.meta.env.VITE_ADMIN_PASSWORD
-    ) {
+    try {
+      await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
       setError("");
       onAuthenticated();
-      return;
+    } catch {
+      setError("Incorrect email or password.");
     }
-
-    setError("Incorrect email or password.");
   };
 
   return (

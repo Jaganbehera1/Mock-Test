@@ -4,15 +4,13 @@ import {
   AlertCircle, Eye, RotateCcw, X, Menu, BookOpen, Calendar, Timer,
   User, GraduationCap, Award, Loader2,
 } from "lucide-react";
-import { supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/supabase";
+import { firebaseDb as supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/firebase";
 
 type Phase = "register" | "select" | "test" | "result";
 type AnswerMap = Record<string, string>;
 type FlagMap = Record<string, boolean>;
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
-const LETTERS_TO_INDEX: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 };
-
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -229,7 +227,7 @@ function TestSelectScreen({
         return;
       }
 
-      const rows = (data || []) as TestRow[];
+      const rows = (data || []) as unknown as TestRow[];
       setTests(rows);
 
       // Fetch question counts for each test
@@ -393,7 +391,7 @@ function TestScreen({
         setLoading(false);
         return;
       }
-      setQuestions((data || []) as QuestionRow[]);
+      setQuestions((data || []) as unknown as QuestionRow[]);
       setLoading(false);
     })();
   }, [test.id]);
@@ -436,7 +434,7 @@ function TestScreen({
       setError("Could not submit test. Please try again.");
       return;
     }
-    onComplete(data as AttemptRow);
+    onComplete(data as unknown as AttemptRow);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [answers, questions, test.id, student, onComplete]);
 
@@ -947,7 +945,7 @@ function ResultScreen({
         .select("*")
         .eq("test_id", test.id)
         .order("display_order", { ascending: true });
-      setQuestions((data || []) as QuestionRow[]);
+      setQuestions((data || []) as unknown as QuestionRow[]);
       setLoading(false);
     })();
   }, [test.id]);

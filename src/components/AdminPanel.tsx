@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import {
-  Shield, BookOpen, Plus, Clock, Users, FileText, ChevronRight,
+  Shield, BookOpen, Plus, Clock, Users, FileText,
   Trash2, Edit2, X, Check, AlertCircle, Loader2, ArrowLeft,
-  Layers, ListChecks, Calendar, Timer, Award, Search, Download,
+  Layers, ListChecks, Calendar, Award, Search, Download,
 } from "lucide-react";
-import { supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/supabase";
+import { firebaseDb as supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/firebase";
 
 type AdminTab = "dashboard" | "tests" | "attempts";
 
@@ -83,8 +83,9 @@ function Dashboard() {
         .select("percentage")
         .eq("status", "completed");
 
-      const avg = attempts && attempts.length > 0
-        ? Math.round(attempts.reduce((sum: number, a: any) => sum + Number(a.percentage), 0) / attempts.length)
+      const attemptRows = (attempts || []) as unknown as Array<{ percentage: number }>;
+      const avg = attemptRows.length > 0
+        ? Math.round(attemptRows.reduce((sum, attempt) => sum + Number(attempt.percentage), 0) / attemptRows.length)
         : 0;
 
       setStats({
@@ -143,7 +144,7 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
   const fetchTests = useCallback(async () => {
     setLoading(true);
     const { data } = await supabase.from("tests").select("*").order("created_at", { ascending: false });
-    const rows = (data || []) as TestRow[];
+    const rows = (data || []) as unknown as TestRow[];
     setTests(rows);
 
     const qCounts: Record<string, number> = {};
@@ -348,7 +349,7 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
       .select("*")
       .eq("test_id", test.id)
       .order("display_order", { ascending: true });
-    setQuestions((data || []) as QuestionRow[]);
+    setQuestions((data || []) as unknown as QuestionRow[]);
     setLoading(false);
   }, [test.id]);
 
@@ -669,9 +670,9 @@ function AttemptsViewer() {
         supabase.from("student_attempts").select("*").eq("status", "completed").order("completed_at", { ascending: false }),
         supabase.from("tests").select("*"),
       ]);
-      setAttempts((aData || []) as AttemptRow[]);
+      setAttempts((aData || []) as unknown as AttemptRow[]);
       const tMap: Record<string, TestRow> = {};
-      for (const t of (tData || []) as TestRow[]) tMap[t.id] = t;
+      for (const t of (tData || []) as unknown as TestRow[]) tMap[t.id] = t;
       setTests(tMap);
       setLoading(false);
     })();
