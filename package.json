@@ -8,6 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "migrate:supabase-to-firebase": "node scripts/migrate-supabase-to-firebase.mjs",
+    "restore:all-tests": "node scripts/restore-all-tests.mjs",
+    "restore:english-questions": "node scripts/restore-english-questions.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
   },

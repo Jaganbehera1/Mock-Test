@@ -327,7 +327,7 @@ function AdminField({ label, placeholder, value, onChange }: { label: string; pl
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="odia-input w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );
@@ -417,14 +417,14 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
                   {idx + 1}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-800 mb-2">{q.question_text}</p>
+                  <p className="odia-font text-sm font-semibold text-slate-800 mb-2">{q.question_text}</p>
                   <div className="grid grid-cols-2 gap-1.5 text-xs">
                     {[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, i) => (
                       <div key={i} className={`flex items-center gap-1.5 px-2 py-1 rounded ${
                         OPTION_LABELS[i] === q.correct_answer ? "bg-green-50 text-green-700 font-medium" : "text-slate-500"
                       }`}>
                         <span className="font-bold">{OPTION_LABELS[i]}.</span>
-                        <span className="truncate">{opt}</span>
+                        <span className="odia-font truncate">{opt}</span>
                         {OPTION_LABELS[i] === q.correct_answer && <Check className="w-3 h-3 ml-auto flex-shrink-0" />}
                       </div>
                     ))}
@@ -546,7 +546,7 @@ function QuestionModal({
               onChange={(e) => setForm({ ...form, question_text: e.target.value })}
               placeholder="Enter the question..."
               rows={3}
-              className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="odia-input w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             />
           </div>
           {OPTION_LABELS.map((letter) => (
@@ -561,7 +561,7 @@ function QuestionModal({
                   value={form[`option_${letter.toLowerCase()}` as keyof typeof form]}
                   onChange={(e) => setForm({ ...form, [`option_${letter.toLowerCase()}`]: e.target.value })}
                   placeholder={`Option ${letter}`}
-                  className="flex-1 px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="odia-input flex-1 px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button
                   onClick={() => setForm({ ...form, correct_answer: letter })}

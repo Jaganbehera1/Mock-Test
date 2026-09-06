@@ -664,7 +664,7 @@ function TestScreen({
               <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
                 {currentIndex + 1}
               </div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-800 leading-relaxed pt-1">
+              <h2 className="odia-font text-base sm:text-lg font-semibold text-slate-800 leading-relaxed pt-1">
                 {currentQuestion.question_text}
               </h2>
             </div>
@@ -693,7 +693,7 @@ function TestScreen({
                     >
                       {letter}
                     </span>
-                    <span className={`text-sm sm:text-base ${isSelected ? "text-blue-900 font-medium" : "text-slate-700"}`}>
+                    <span className={`odia-font text-sm sm:text-base ${isSelected ? "text-blue-900 font-medium" : "text-slate-700"}`}>
                       {optionText}
                     </span>
                   </button>
@@ -1107,7 +1107,7 @@ function ReviewItem({
         }`}>
           {index + 1}
         </span>
-        <p className="text-sm font-semibold text-slate-800 leading-relaxed pt-0.5">{question.question_text}</p>
+        <p className="odia-font text-sm font-semibold text-slate-800 leading-relaxed pt-0.5">{question.question_text}</p>
       </div>
 
       <div className="space-y-1.5 ml-10">
@@ -1121,7 +1121,7 @@ function ReviewItem({
           return (
             <div key={opt.letter} className={className}>
               <span className="font-bold text-xs">{opt.letter}.</span>
-              <span>{opt.text}</span>
+              <span className="odia-font">{opt.text}</span>
               {isCorrectOpt && <CheckCircle2 className="w-4 h-4 text-green-600 ml-auto flex-shrink-0" />}
               {isUserOpt && !isCorrectOpt && <X className="w-4 h-4 text-red-600 ml-auto flex-shrink-0" />}
             </div>

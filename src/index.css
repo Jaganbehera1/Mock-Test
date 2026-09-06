@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.odia-font,
+	.odia-input {
+		font-family: "Kalinga", "Nirmala UI", "Noto Sans Oriya", sans-serif;
+	}
+}
