@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Clock, CheckCircle2, Circle, ChevronLeft, ChevronRight, Flag,
   AlertCircle, Eye, RotateCcw, X, Menu, BookOpen, Calendar, Timer,
@@ -11,6 +11,7 @@ type AnswerMap = Record<string, string>;
 type FlagMap = Record<string, boolean>;
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -110,17 +111,17 @@ function RegistrationScreen({
   };
 
   return (
-    <div className="min-h-[calc(100vh-49px)] flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-slate-100">
+    <div className="min-h-[calc(100vh-49px)] flex items-center justify-center p-4 bg-gradient-to-br from-orange-50 via-white to-green-50">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-700 to-blue-600 px-6 py-8 text-center">
+          <div className="bg-gradient-to-r from-[#FF9933] via-[#FFB347] to-[#138808] px-6 py-8 text-center">
             <div className="flex justify-center mb-3">
-              <div className="w-14 h-14 rounded-xl bg-white/15 flex items-center justify-center">
-                <User className="w-7 h-7 text-white" />
+              <div className="w-14 h-14 rounded-xl bg-white/30 backdrop-blur flex items-center justify-center border border-white/40">
+                <User className="w-7 h-7 text-gray-800" />
               </div>
             </div>
-            <h2 className="text-xl font-bold text-white">Student Registration</h2>
-            <p className="text-blue-100 text-sm mt-1">Enter your details to begin</p>
+            <h2 className="text-xl font-bold text-gray-800">Student Registration</h2>
+            <p className="text-gray-700 text-sm mt-1">Enter your details to begin</p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -155,7 +156,7 @@ function RegistrationScreen({
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 transition-colors active:scale-[0.98]"
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 font-bold text-sm hover:shadow-lg transition-all active:scale-[0.98]"
             >
               Continue to Tests
             </button>
@@ -181,15 +182,15 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="block text-xs font-semibold text-slate-600 mb-1.5">{label}</label>
+      <label className="block text-xs font-semibold text-slate-700 mb-1.5">{label}</label>
       <div className="relative">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">{icon}</div>
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">{icon}</div>
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          className="kalinga-font w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF9933] focus:border-transparent transition-all"
         />
       </div>
     </div>
@@ -230,7 +231,6 @@ function TestSelectScreen({
       const rows = (data || []) as unknown as TestRow[];
       setTests(rows);
 
-      // Fetch question counts for each test
       const counts: Record<string, number> = {};
       for (const t of rows) {
         const { count } = await supabase
@@ -245,56 +245,58 @@ function TestSelectScreen({
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Student info banner */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
-          {student.name.charAt(0).toUpperCase()}
+    <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Student info banner */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 mb-6 flex items-center gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 flex items-center justify-center font-bold text-sm flex-shrink-0">
+            {student.name.charAt(0).toUpperCase()}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-bold text-slate-800 truncate">{student.name}</p>
+            <p className="text-xs text-slate-600 truncate">
+              Roll: {student.roll} &middot; {student.school}
+            </p>
+          </div>
+          <button
+            onClick={onBack}
+            className="text-xs text-[#FF9933] font-semibold hover:underline flex-shrink-0"
+          >
+            Change
+          </button>
         </div>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-bold text-slate-800 truncate">{student.name}</p>
-          <p className="text-xs text-slate-500 truncate">
-            Roll: {student.roll} &middot; {student.school}
-          </p>
-        </div>
-        <button
-          onClick={onBack}
-          className="text-xs text-blue-600 font-medium hover:underline flex-shrink-0"
-        >
-          Change
-        </button>
+
+        <h2 className="text-xl font-bold text-slate-800 mb-1">Available Tests</h2>
+        <p className="text-sm text-slate-600 mb-6">Select a test to begin. Good luck!</p>
+
+        {loading ? (
+          <div className="flex items-center justify-center py-20 text-slate-500">
+            <Loader2 className="w-6 h-6 animate-spin" />
+            <span className="ml-2 text-sm">Loading tests...</span>
+          </div>
+        ) : error ? (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+            <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-3" />
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        ) : tests.length === 0 ? (
+          <div className="bg-white border border-slate-200 rounded-xl p-12 text-center shadow-sm">
+            <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+            <p className="text-sm text-slate-500">No tests are available yet. Please check back later.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {tests.map((test) => (
+              <TestCard
+                key={test.id}
+                test={test}
+                questionCount={questionCounts[test.id] || 0}
+                onSelect={() => onSelect(test)}
+              />
+            ))}
+          </div>
+        )}
       </div>
-
-      <h2 className="text-xl font-bold text-slate-800 mb-1">Available Tests</h2>
-      <p className="text-sm text-slate-500 mb-6">Select a test to begin. Good luck!</p>
-
-      {loading ? (
-        <div className="flex items-center justify-center py-20 text-slate-400">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          <span className="ml-2 text-sm">Loading tests...</span>
-        </div>
-      ) : error ? (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
-          <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-3" />
-          <p className="text-sm text-red-600">{error}</p>
-        </div>
-      ) : tests.length === 0 ? (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-12 text-center">
-          <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-sm text-slate-500">No tests are available yet. Please check back later.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {tests.map((test) => (
-            <TestCard
-              key={test.id}
-              test={test}
-              questionCount={questionCounts[test.id] || 0}
-              onSelect={() => onSelect(test)}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
@@ -312,39 +314,39 @@ function TestCard({
     <button
       onClick={onSelect}
       disabled={questionCount === 0}
-      className="text-left bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md hover:border-blue-300 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+      className="text-left bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md hover:border-[#FF9933] transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
     >
       <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-          <BookOpen className="w-5 h-5 text-blue-600" />
+        <div className="w-11 h-11 rounded-lg bg-[#FF9933]/15 flex items-center justify-center flex-shrink-0">
+          <BookOpen className="w-5 h-5 text-[#FF9933]" />
         </div>
         {questionCount > 0 && (
-          <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 font-medium">
+          <span className="text-xs px-2 py-1 rounded-full bg-[#138808]/10 text-[#138808] font-medium">
             {questionCount} Questions
           </span>
         )}
       </div>
       <h3 className="font-bold text-slate-800 text-sm mb-1 leading-snug">{test.title}</h3>
-      <div className="space-y-1 text-xs text-slate-500 mb-4">
+      <div className="space-y-1 text-xs text-slate-600 mb-4">
         {test.subject && <p>Subject: {test.subject}</p>}
         {test.topic && <p>Topic: {test.topic}</p>}
         {test.class_name && <p>Class: {test.class_name}</p>}
       </div>
       <div className="flex items-center gap-4 text-xs text-slate-600 mb-4">
         <span className="flex items-center gap-1.5">
-          <Clock className="w-3.5 h-3.5 text-blue-600" />
+          <Clock className="w-3.5 h-3.5 text-[#FF9933]" />
           {test.duration_minutes} min
         </span>
         {test.session && (
           <span className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-blue-600" />
+            <Calendar className="w-3.5 h-3.5 text-[#138808]" />
             {test.session}
           </span>
         )}
       </div>
       <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-        <span className="text-xs text-slate-400 truncate">{test.prepared_by}</span>
-        <span className="text-sm font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
+        <span className="text-xs text-slate-500 truncate">{test.prepared_by}</span>
+        <span className="text-sm font-bold text-[#FF9933] group-hover:translate-x-1 transition-transform">
           Start →
         </span>
       </div>
@@ -497,12 +499,12 @@ function TestScreen({
   // Start confirmation overlay
   if (showStartConfirm && !loading && !error) {
     return (
-      <div className="min-h-[calc(100vh-49px)] flex items-center justify-center p-4 bg-slate-50">
+      <div className="min-h-[calc(100vh-49px)] flex items-center justify-center p-4 bg-gradient-to-br from-orange-50 via-white to-green-50">
         <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-700 to-blue-600 px-6 py-8 text-center">
-            <GraduationCap className="w-10 h-10 text-white mx-auto mb-3" />
-            <h2 className="text-lg font-bold text-white">{test.title}</h2>
-            <p className="text-blue-100 text-sm mt-1">{test.subject} &middot; {test.topic}</p>
+          <div className="bg-gradient-to-r from-[#FF9933] via-[#FFB347] to-[#138808] px-6 py-8 text-center">
+            <GraduationCap className="w-10 h-10 text-gray-800 mx-auto mb-3" />
+            <h2 className="text-lg font-bold text-gray-800">{test.title}</h2>
+            <p className="text-gray-700 text-sm mt-1">{test.subject} &middot; {test.topic}</p>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-3 gap-3 mb-6">
@@ -532,7 +534,7 @@ function TestScreen({
               </button>
               <button
                 onClick={() => setShowStartConfirm(false)}
-                className="flex-1 py-3 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 font-bold text-sm hover:shadow-lg transition-all"
               >
                 Start Test
               </button>
@@ -545,7 +547,7 @@ function TestScreen({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20 text-slate-400">
+      <div className="flex items-center justify-center py-20 text-slate-500">
         <Loader2 className="w-6 h-6 animate-spin" />
         <span className="ml-2 text-sm">Loading test...</span>
       </div>
@@ -557,7 +559,7 @@ function TestScreen({
       <div className="max-w-md mx-auto py-20 text-center">
         <AlertCircle className="w-10 h-10 text-red-400 mx-auto mb-3" />
         <p className="text-sm text-red-600 mb-4">{error}</p>
-        <button onClick={onExit} className="text-sm text-blue-600 font-medium hover:underline">
+        <button onClick={onExit} className="text-sm text-[#FF9933] font-semibold hover:underline">
           Go back
         </button>
       </div>
@@ -588,23 +590,23 @@ function TestScreen({
   const totalQuestions = questions.length;
 
   return (
-    <div className="min-h-[calc(100vh-49px)] bg-slate-50">
+    <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
+      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
-              <GraduationCap className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-r from-[#FF9933] to-[#FF8C00] flex items-center justify-center flex-shrink-0">
+              <GraduationCap className="w-5 h-5 text-gray-800" />
             </div>
             <div className="min-w-0 hidden sm:block">
               <h1 className="text-sm font-bold text-slate-800 truncate">{test.title}</h1>
-              <p className="text-xs text-slate-500 truncate">{test.subject} &middot; {test.topic}</p>
+              <p className="text-xs text-slate-600 truncate">{test.subject} &middot; {test.topic}</p>
             </div>
           </div>
 
           <div
             className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg font-mono font-bold text-sm sm:text-base transition-colors ${
-              timeWarning ? "bg-red-50 text-red-600 border border-red-200 animate-pulse" : "bg-slate-100 text-slate-700"
+              timeWarning ? "bg-red-50 text-red-700 border border-red-200 animate-pulse" : "bg-slate-100 text-slate-700"
             }`}
           >
             <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -613,7 +615,7 @@ function TestScreen({
 
           <button
             onClick={() => setShowPaletteMobile(true)}
-            className="lg:hidden flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+            className="lg:hidden flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 text-sm font-medium"
           >
             <Menu className="w-5 h-5" />
             <span className="hidden sm:inline">Questions</span>
@@ -622,18 +624,18 @@ function TestScreen({
       </header>
 
       {/* Info bar */}
-      <div className="bg-blue-50 border-b border-blue-100">
-        <div className="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-blue-700">
+      <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-slate-700">
           <span className="flex items-center gap-1.5">
-            <BookOpen className="w-3.5 h-3.5" />
+            <BookOpen className="w-3.5 h-3.5 text-[#FF9933]" />
             {test.subject} | {test.topic}
           </span>
           <span className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5" />
+            <Calendar className="w-3.5 h-3.5 text-[#138808]" />
             {test.session}
           </span>
           <span className="flex items-center gap-1.5">
-            <Timer className="w-3.5 h-3.5" />
+            <Timer className="w-3.5 h-3.5 text-[#FF9933]" />
             {test.duration_minutes} Minutes
           </span>
         </div>
@@ -648,23 +650,23 @@ function TestScreen({
               <span className="text-sm font-semibold text-slate-700">
                 Question {currentIndex + 1} of {totalQuestions}
               </span>
-              <span className="text-sm text-slate-500">{answeredCount} answered</span>
+              <span className="text-sm text-slate-600">{answeredCount} answered</span>
             </div>
             <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                className="h-full bg-gradient-to-r from-[#FF9933] to-[#FF8C00] rounded-full transition-all duration-300"
                 style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
               />
             </div>
           </div>
 
-          {/* Question Card */}
+          {/* Question Card - with Kalinga font for Odia text */}
           <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 sm:p-8">
             <div className="flex items-start gap-3 mb-6">
-              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 flex items-center justify-center font-bold text-sm">
                 {currentIndex + 1}
               </div>
-              <h2 className="odia-font text-base sm:text-lg font-semibold text-slate-800 leading-relaxed pt-1">
+              <h2 className="kalinga-font text-base sm:text-lg font-semibold text-slate-800 leading-relaxed pt-1">
                 {currentQuestion.question_text}
               </h2>
             </div>
@@ -683,17 +685,17 @@ function TestScreen({
                     key={letter}
                     onClick={() => selectAnswer(currentQuestion.id, letter)}
                     className={`w-full text-left flex items-center gap-3 p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 group ${
-                      isSelected ? "border-blue-600 bg-blue-50 shadow-sm" : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+                      isSelected ? "border-[#FF9933] bg-orange-50 shadow-sm" : "border-slate-200 bg-white hover:border-[#FF9933]/50 hover:bg-orange-50/30"
                     }`}
                   >
                     <span
                       className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${
-                        isSelected ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-600 group-hover:bg-blue-100 group-hover:text-blue-700"
+                        isSelected ? "bg-[#FF9933] text-gray-800" : "bg-slate-100 text-slate-600 group-hover:bg-[#FF9933]/20 group-hover:text-[#FF9933]"
                       }`}
                     >
                       {letter}
                     </span>
-                    <span className={`odia-font text-sm sm:text-base ${isSelected ? "text-blue-900 font-medium" : "text-slate-700"}`}>
+                    <span className={`kalinga-font text-sm sm:text-base ${isSelected ? "text-[#FF9933] font-medium" : "text-slate-700"}`}>
                       {optionText}
                     </span>
                   </button>
@@ -706,7 +708,7 @@ function TestScreen({
               <button
                 onClick={() => toggleFlag(currentQuestion.id)}
                 className={`flex items-center gap-2 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors ${
-                  flags[currentQuestion.id] ? "text-amber-600 bg-amber-50" : "text-slate-500 hover:text-amber-600 hover:bg-amber-50"
+                  flags[currentQuestion.id] ? "text-amber-700 bg-amber-50" : "text-slate-600 hover:text-amber-700 hover:bg-amber-50"
                 }`}
               >
                 <Flag className={`w-4 h-4 ${flags[currentQuestion.id] ? "fill-amber-500 text-amber-500" : ""}`} />
@@ -714,7 +716,7 @@ function TestScreen({
               </button>
               <span
                 className={`text-xs px-2 py-1 rounded font-medium ${
-                  answers[currentQuestion.id] !== undefined ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
+                  answers[currentQuestion.id] !== undefined ? "bg-[#138808]/10 text-[#138808]" : "bg-slate-100 text-slate-600"
                 }`}
               >
                 {answers[currentQuestion.id] !== undefined ? "Answered" : "Not answered"}
@@ -735,7 +737,7 @@ function TestScreen({
             {isLastQuestion ? (
               <button
                 onClick={() => setShowSubmitConfirm(true)}
-                className="flex items-center gap-2 px-5 sm:px-7 py-2.5 rounded-lg bg-green-600 text-white font-bold text-sm transition-colors hover:bg-green-700 shadow-sm"
+                className="flex items-center gap-2 px-5 sm:px-7 py-2.5 rounded-lg bg-gradient-to-r from-[#138808] to-[#0d6605] text-white font-bold text-sm transition-colors hover:shadow-lg shadow-sm"
               >
                 <CheckCircle2 className="w-5 h-5" />
                 Submit Test
@@ -743,7 +745,7 @@ function TestScreen({
             ) : (
               <button
                 onClick={nextQuestion}
-                className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium text-sm transition-colors hover:bg-blue-700"
+                className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 font-medium text-sm transition-colors hover:shadow-lg"
               >
                 <span className="hidden sm:inline">Next</span>
                 <ChevronRight className="w-4 h-4" />
@@ -816,7 +818,7 @@ function TestScreen({
                     {totalQuestions - answeredCount} question(s) are still unanswered.
                   </p>
                 )}
-                {answeredCount === totalQuestions && <p className="text-sm text-green-600 mb-4">All questions answered!</p>}
+                {answeredCount === totalQuestions && <p className="text-sm text-[#138808] mb-4">All questions answered!</p>}
               </div>
             </div>
             <div className="flex gap-3 justify-end mt-2">
@@ -829,7 +831,7 @@ function TestScreen({
               <button
                 onClick={handleSubmit}
                 disabled={submitting}
-                className="px-5 py-2 rounded-lg bg-green-600 text-white text-sm font-bold hover:bg-green-700 disabled:opacity-60"
+                className="px-5 py-2 rounded-lg bg-gradient-to-r from-[#138808] to-[#0d6605] text-white text-sm font-bold hover:shadow-lg disabled:opacity-60"
               >
                 {submitting ? "Submitting..." : "Submit Now"}
               </button>
@@ -844,9 +846,9 @@ function TestScreen({
 function InfoStat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="bg-slate-50 rounded-lg p-3 text-center border border-slate-200">
-      <div className="flex justify-center text-blue-600 mb-1">{icon}</div>
+      <div className="flex justify-center text-[#FF9933] mb-1">{icon}</div>
       <p className="text-lg font-bold text-slate-800">{value}</p>
-      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-xs text-slate-600">{label}</p>
     </div>
   );
 }
@@ -874,10 +876,10 @@ function QuestionPalette({
     <div>
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
         <h3 className="font-bold text-slate-800 text-sm mb-3">Question Palette</h3>
-        <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-slate-600 mb-4">
-          <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded bg-green-500" /> Answered</span>
+        <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-slate-700 mb-4">
+          <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded bg-[#138808]" /> Answered</span>
           <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded bg-amber-400" /> Flagged</span>
-          <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded bg-blue-600" /> Current</span>
+          <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded bg-[#FF9933]" /> Current</span>
           <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded bg-slate-200 border border-slate-300" /> Not visited</span>
         </div>
 
@@ -887,9 +889,9 @@ function QuestionPalette({
             const isFlagged = flags[q.id];
             const isCurrent = idx === currentIndex;
             let bgClass = "bg-slate-200 text-slate-600 border border-slate-300";
-            if (isCurrent) bgClass = "bg-blue-600 text-white ring-2 ring-blue-300";
-            else if (isAnswered && isFlagged) bgClass = "bg-amber-400 text-white";
-            else if (isAnswered) bgClass = "bg-green-500 text-white";
+            if (isCurrent) bgClass = "bg-[#FF9933] text-gray-800 ring-2 ring-[#FF9933]/50";
+            else if (isAnswered && isFlagged) bgClass = "bg-amber-400 text-gray-800";
+            else if (isAnswered) bgClass = "bg-[#138808] text-white";
             else if (isFlagged) bgClass = "bg-amber-100 text-amber-700 border border-amber-300";
             return (
               <button
@@ -904,15 +906,15 @@ function QuestionPalette({
         </div>
 
         <div className="mt-4 pt-4 border-t border-slate-100 space-y-2 text-xs">
-          <div className="flex justify-between"><span className="text-slate-500">Answered</span><span className="font-bold text-green-600">{answeredCount}</span></div>
-          <div className="flex justify-between"><span className="text-slate-500">Flagged</span><span className="font-bold text-amber-600">{flaggedCount}</span></div>
-          <div className="flex justify-between"><span className="text-slate-500">Remaining</span><span className="font-bold text-slate-700">{questions.length - answeredCount}</span></div>
+          <div className="flex justify-between"><span className="text-slate-600">Answered</span><span className="font-bold text-[#138808]">{answeredCount}</span></div>
+          <div className="flex justify-between"><span className="text-slate-600">Flagged</span><span className="font-bold text-amber-600">{flaggedCount}</span></div>
+          <div className="flex justify-between"><span className="text-slate-600">Remaining</span><span className="font-bold text-slate-700">{questions.length - answeredCount}</span></div>
         </div>
       </div>
 
       <button
         onClick={onSubmit}
-        className="w-full mt-4 py-3 rounded-xl bg-green-600 text-white font-bold text-sm transition-colors hover:bg-green-700 shadow-sm flex items-center justify-center gap-2"
+        className="w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-[#138808] to-[#0d6605] text-white font-bold text-sm transition-colors hover:shadow-lg shadow-sm flex items-center justify-center gap-2"
       >
         <CheckCircle2 className="w-5 h-5" />
         Submit Test
@@ -968,99 +970,101 @@ function ResultScreen({
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Score Card */}
-      <div className={`bg-white rounded-2xl border-2 shadow-lg overflow-hidden ${passed ? "border-green-200" : "border-red-200"}`}>
-        <div className={`px-6 py-8 sm:px-10 text-center ${passed ? "bg-gradient-to-r from-green-600 to-emerald-600" : "bg-gradient-to-r from-red-600 to-rose-600"}`}>
-          <div className="flex justify-center mb-3">
-            {passed ? <Award className="w-14 h-14 text-white" /> : <AlertCircle className="w-14 h-14 text-white" />}
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">
-            {passed ? "Congratulations!" : "Keep Practicing!"}
-          </h2>
-          <p className="text-white/80 text-sm mt-1">
-            {passed ? "You passed the test." : "You need 35% to pass."}
-          </p>
-          <div className="mt-6 inline-flex items-baseline gap-2 bg-white/15 backdrop-blur px-6 py-3 rounded-xl">
-            <span className="text-4xl sm:text-5xl font-bold text-white">{correct}</span>
-            <span className="text-xl text-white/80">/ {total}</span>
-          </div>
-          <p className="text-white/90 text-lg font-semibold mt-2">{percentage}%</p>
-          <div className="mt-3 inline-block px-4 py-1 rounded-full bg-white/20 text-white text-sm font-bold">
-            Grade: {getGrade(percentage)}
-          </div>
-        </div>
-
-        {/* Student Info */}
-        <div className="px-6 sm:px-10 py-4 bg-slate-50 border-b border-slate-100">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-slate-600">
-            <span className="font-medium text-slate-800">{attempt.student_name}</span>
-            <span>Roll: {attempt.roll_number}</span>
-            <span className="truncate">{attempt.school_name}</span>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="p-6 sm:p-8">
-          <div className="grid grid-cols-3 gap-3 sm:gap-4">
-            <StatCard label="Correct" value={correct} icon={<CheckCircle2 className="w-5 h-5" />} color="green" />
-            <StatCard label="Wrong" value={Math.max(wrong, 0)} icon={<X className="w-5 h-5" />} color="red" />
-            <StatCard label="Unanswered" value={unanswered} icon={<Circle className="w-5 h-5" />} color="slate" />
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
-            <div className="flex items-center gap-2 text-slate-600">
-              <BookOpen className="w-4 h-4 text-blue-600" />
-              <span>{test.subject} &middot; {test.topic}</span>
+    <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Score Card */}
+        <div className={`bg-white rounded-2xl border-2 shadow-lg overflow-hidden ${passed ? "border-[#138808]/30" : "border-red-200"}`}>
+          <div className={`px-6 py-8 sm:px-10 text-center ${passed ? "bg-gradient-to-r from-[#138808] to-[#0d6605]" : "bg-gradient-to-r from-red-600 to-rose-600"}`}>
+            <div className="flex justify-center mb-3">
+              {passed ? <Award className="w-14 h-14 text-white" /> : <AlertCircle className="w-14 h-14 text-white" />}
             </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <Calendar className="w-4 h-4 text-blue-600" />
-              <span>{test.session}</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              {passed ? "Congratulations!" : "Keep Practicing!"}
+            </h2>
+            <p className="text-white/80 text-sm mt-1">
+              {passed ? "You passed the test." : "You need 35% to pass."}
+            </p>
+            <div className="mt-6 inline-flex items-baseline gap-2 bg-white/15 backdrop-blur px-6 py-3 rounded-xl">
+              <span className="text-4xl sm:text-5xl font-bold text-white">{correct}</span>
+              <span className="text-xl text-white/80">/ {total}</span>
+            </div>
+            <p className="text-white/90 text-lg font-semibold mt-2">{percentage}%</p>
+            <div className="mt-3 inline-block px-4 py-1 rounded-full bg-white/20 text-white text-sm font-bold">
+              Grade: {getGrade(percentage)}
             </div>
           </div>
 
+          {/* Student Info */}
+          <div className="px-6 sm:px-10 py-4 bg-slate-50 border-b border-slate-100">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-slate-700">
+              <span className="font-medium text-slate-800">{attempt.student_name}</span>
+              <span>Roll: {attempt.roll_number}</span>
+              <span className="truncate">{attempt.school_name}</span>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="p-6 sm:p-8">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              <StatCard label="Correct" value={correct} icon={<CheckCircle2 className="w-5 h-5" />} color="green" />
+              <StatCard label="Wrong" value={Math.max(wrong, 0)} icon={<X className="w-5 h-5" />} color="red" />
+              <StatCard label="Unanswered" value={unanswered} icon={<Circle className="w-5 h-5" />} color="slate" />
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
+              <div className="flex items-center gap-2 text-slate-700">
+                <BookOpen className="w-4 h-4 text-[#FF9933]" />
+                <span>{test.subject} &middot; {test.topic}</span>
+              </div>
+              <div className="flex items-center gap-2 text-slate-700">
+                <Calendar className="w-4 h-4 text-[#138808]" />
+                <span>{test.session}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowReview(!showReview)}
+              disabled={loading}
+              className="w-full mt-6 py-3 rounded-xl bg-slate-800 text-white font-bold text-sm transition-colors hover:bg-slate-900 flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              <Eye className="w-5 h-5" />
+              {showReview ? "Hide Answer Review" : "Review Answers & Correct Options"}
+            </button>
+          </div>
+        </div>
+
+        {/* Review - with Kalinga font for Odia text */}
+        {showReview && !loading && (
+          <div className="mt-6 space-y-3">
+            <h3 className="text-lg font-bold text-slate-800 px-1">Answer Review</h3>
+            {questions.map((q, idx) => (
+              <ReviewItem key={q.id} question={q} index={idx} userAnswer={attempt.answers[q.id]} />
+            ))}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="w-full mt-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium text-sm hover:bg-slate-100"
+            >
+              Back to Top
+            </button>
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="mt-6 flex gap-3">
           <button
-            onClick={() => setShowReview(!showReview)}
-            disabled={loading}
-            className="w-full mt-6 py-3 rounded-xl bg-slate-800 text-white font-bold text-sm transition-colors hover:bg-slate-900 flex items-center justify-center gap-2 disabled:opacity-60"
+            onClick={onRestart}
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 font-bold text-sm hover:shadow-lg flex items-center justify-center gap-2"
           >
-            <Eye className="w-5 h-5" />
-            {showReview ? "Hide Answer Review" : "Review Answers & Correct Options"}
+            <RotateCcw className="w-4 h-4" />
+            Take Another Test
+          </button>
+          <button
+            onClick={onExit}
+            className="flex-1 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium text-sm hover:bg-slate-50"
+          >
+            Back to Home
           </button>
         </div>
-      </div>
-
-      {/* Review */}
-      {showReview && !loading && (
-        <div className="mt-6 space-y-3">
-          <h3 className="text-lg font-bold text-slate-800 px-1">Answer Review</h3>
-          {questions.map((q, idx) => (
-            <ReviewItem key={q.id} question={q} index={idx} userAnswer={attempt.answers[q.id]} />
-          ))}
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="w-full mt-6 py-3 rounded-xl border border-slate-300 text-slate-600 font-medium text-sm hover:bg-slate-100"
-          >
-            Back to Top
-          </button>
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className="mt-6 flex gap-3">
-        <button
-          onClick={onRestart}
-          className="flex-1 py-3 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 flex items-center justify-center gap-2"
-        >
-          <RotateCcw className="w-4 h-4" />
-          Take Another Test
-        </button>
-        <button
-          onClick={onExit}
-          className="flex-1 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium text-sm hover:bg-slate-50"
-        >
-          Back to Home
-        </button>
       </div>
     </div>
   );
@@ -1072,7 +1076,7 @@ function StatCard({
   label: string; value: number; icon: React.ReactNode; color: "green" | "red" | "slate";
 }) {
   const colorClasses = {
-    green: "bg-green-50 text-green-700 border-green-200",
+    green: "bg-[#138808]/10 text-[#138808] border-[#138808]/20",
     red: "bg-red-50 text-red-700 border-red-200",
     slate: "bg-slate-50 text-slate-700 border-slate-200",
   };
@@ -1100,29 +1104,29 @@ function ReviewItem({
   ];
 
   return (
-    <div className={`bg-white rounded-xl border-l-4 shadow-sm p-4 sm:p-5 ${isCorrect ? "border-green-500" : isUnanswered ? "border-slate-300" : "border-red-500"}`}>
+    <div className={`bg-white rounded-xl border-l-4 shadow-sm p-4 sm:p-5 ${isCorrect ? "border-[#138808]" : isUnanswered ? "border-slate-300" : "border-red-500"}`}>
       <div className="flex items-start gap-3 mb-3">
         <span className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${
-          isCorrect ? "bg-green-100 text-green-700" : isUnanswered ? "bg-slate-100 text-slate-500" : "bg-red-100 text-red-700"
+          isCorrect ? "bg-[#138808]/10 text-[#138808]" : isUnanswered ? "bg-slate-100 text-slate-500" : "bg-red-100 text-red-700"
         }`}>
           {index + 1}
         </span>
-        <p className="odia-font text-sm font-semibold text-slate-800 leading-relaxed pt-0.5">{question.question_text}</p>
+        <p className="kalinga-font text-sm font-semibold text-slate-800 leading-relaxed pt-0.5">{question.question_text}</p>
       </div>
 
       <div className="space-y-1.5 ml-10">
         {options.map((opt) => {
           const isCorrectOpt = opt.letter === question.correct_answer;
           const isUserOpt = opt.letter === userAnswer;
-          let className = "text-sm py-1.5 px-3 rounded-lg flex items-center gap-2 ";
-          if (isCorrectOpt) className += "bg-green-50 text-green-800 border border-green-200";
+          let className = "kalinga-font text-sm py-1.5 px-3 rounded-lg flex items-center gap-2 ";
+          if (isCorrectOpt) className += "bg-[#138808]/10 text-[#138808] border border-[#138808]/20";
           else if (isUserOpt) className += "bg-red-50 text-red-800 border border-red-200";
           else className += "text-slate-500";
           return (
             <div key={opt.letter} className={className}>
               <span className="font-bold text-xs">{opt.letter}.</span>
-              <span className="odia-font">{opt.text}</span>
-              {isCorrectOpt && <CheckCircle2 className="w-4 h-4 text-green-600 ml-auto flex-shrink-0" />}
+              <span className="kalinga-font">{opt.text}</span>
+              {isCorrectOpt && <CheckCircle2 className="w-4 h-4 text-[#138808] ml-auto flex-shrink-0" />}
               {isUserOpt && !isCorrectOpt && <X className="w-4 h-4 text-red-600 ml-auto flex-shrink-0" />}
             </div>
           );
@@ -1131,7 +1135,7 @@ function ReviewItem({
 
       <div className="ml-10 mt-2">
         {isUnanswered ? <p className="text-xs text-slate-400 italic">Not answered</p>
-        : isCorrect ? <p className="text-xs text-green-600 font-medium">Correct</p>
+        : isCorrect ? <p className="text-xs text-[#138808] font-medium">Correct</p>
         : <p className="text-xs text-red-600 font-medium">Incorrect</p>}
       </div>
     </div>

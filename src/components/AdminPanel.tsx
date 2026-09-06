@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Shield, BookOpen, Plus, Clock, Users, FileText,
   Trash2, Edit2, X, Check, AlertCircle, Loader2, ArrowLeft,
@@ -22,22 +22,22 @@ export function AdminPanel() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
+    <div className="max-w-6xl mx-auto px-4 py-6 bg-slate-50 min-h-screen">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center shadow-lg">
             <Shield className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-slate-800">Admin Panel</h1>
-            <p className="text-xs text-slate-500">Manage tests, questions, and view student results</p>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Admin Panel</h1>
+            <p className="text-sm text-slate-500 font-medium">Manage tests, questions, and view student results</p>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-slate-100 p-1 rounded-lg w-full sm:w-auto sm:inline-flex">
+      <div className="flex gap-1 mb-6 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200/60 w-full sm:w-auto sm:inline-flex">
         <TabButton active={tab === "dashboard"} onClick={() => setTab("dashboard")} icon={<Layers className="w-4 h-4" />} label="Dashboard" />
         <TabButton active={tab === "tests"} onClick={() => setTab("tests")} icon={<FileText className="w-4 h-4" />} label="Tests" />
         <TabButton active={tab === "attempts"} onClick={() => setTab("attempts")} icon={<Users className="w-4 h-4" />} label="Attempts" />
@@ -54,8 +54,10 @@ function TabButton({ active, onClick, icon, label }: { active: boolean; onClick:
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-all flex-1 sm:flex-none justify-center ${
-        active ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-700"
+      className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex-1 sm:flex-none justify-center ${
+        active 
+          ? "bg-slate-900 text-white shadow-md" 
+          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
       }`}
     >
       {icon}
@@ -100,8 +102,8 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-16 text-slate-400">
-        <Loader2 className="w-6 h-6 animate-spin" />
+      <div className="flex items-center justify-center py-20 text-slate-400">
+        <Loader2 className="w-8 h-8 animate-spin" />
       </div>
     );
   }
@@ -124,10 +126,10 @@ function DashCard({ icon, label, value, color }: { icon: React.ReactNode; label:
     amber: "bg-amber-50 text-amber-700 border-amber-200",
   };
   return (
-    <div className={`rounded-xl border p-5 ${colors[color]}`}>
+    <div className={`rounded-2xl border-2 p-6 ${colors[color]} shadow-sm hover:shadow-md transition-shadow`}>
       <div className="mb-3">{icon}</div>
-      <p className="text-2xl font-bold">{value}</p>
-      <p className="text-xs font-medium opacity-80 mt-0.5">{label}</p>
+      <p className="text-3xl font-bold">{value}</p>
+      <p className="text-sm font-semibold opacity-80 mt-0.5">{label}</p>
     </div>
   );
 }
@@ -177,11 +179,11 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-bold text-slate-800">All Tests</h2>
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-xl font-bold text-slate-800">All Tests</h2>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-md"
         >
           <Plus className="w-4 h-4" />
           New Test
@@ -189,46 +191,46 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-16 text-slate-400">
-          <Loader2 className="w-6 h-6 animate-spin" />
+        <div className="flex items-center justify-center py-20 text-slate-400">
+          <Loader2 className="w-8 h-8 animate-spin" />
         </div>
       ) : tests.length === 0 ? (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-12 text-center">
-          <FileText className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-sm text-slate-500 mb-4">No tests created yet.</p>
-          <button onClick={() => setShowCreate(true)} className="text-sm text-blue-600 font-medium hover:underline">
+        <div className="bg-white border-2 border-slate-200 rounded-2xl p-16 text-center shadow-sm">
+          <FileText className="w-14 h-14 text-slate-300 mx-auto mb-4" />
+          <p className="text-lg text-slate-500 mb-4 font-medium">No tests created yet.</p>
+          <button onClick={() => setShowCreate(true)} className="text-sm text-blue-600 font-semibold hover:underline">
             Create your first test
           </button>
         </div>
       ) : (
         <div className="space-y-3">
           {tests.map((test) => (
-            <div key={test.id} className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 hover:shadow-md transition-shadow">
+            <div key={test.id} className="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-5 hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between gap-3">
                 <button onClick={() => onEditTest(test)} className="text-left flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-bold text-slate-800 text-sm truncate">{test.title}</h3>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${
+                  <div className="flex items-center gap-3 mb-1.5 flex-wrap">
+                    <h3 className="font-bold text-slate-800 text-base odia-text">{test.title}</h3>
+                    <span className={`text-xs px-3 py-1 rounded-full font-semibold flex-shrink-0 ${
                       test.is_active ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
                     }`}>
                       {test.is_active ? "Active" : "Inactive"}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
-                    <span className="flex items-center gap-1"><ListChecks className="w-3.5 h-3.5" /> {questionCounts[test.id] || 0} questions</span>
-                    <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" /> {attemptCounts[test.id] || 0} attempts</span>
-                    <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {test.duration_minutes} min</span>
-                    {test.subject && <span>{test.subject}</span>}
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-slate-500">
+                    <span className="flex items-center gap-1.5"><ListChecks className="w-4 h-4" /> {questionCounts[test.id] || 0} questions</span>
+                    <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {attemptCounts[test.id] || 0} attempts</span>
+                    <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {test.duration_minutes} min</span>
+                    {test.subject && <span className="odia-text">{test.subject}</span>}
                   </div>
                 </button>
                 <div className="flex items-center gap-1 flex-shrink-0">
-                  <button onClick={() => onEditTest(test)} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-blue-600" title="Edit">
+                  <button onClick={() => onEditTest(test)} className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-blue-600 transition-colors" title="Edit">
                     <Edit2 className="w-4 h-4" />
                   </button>
-                  <button onClick={() => toggleActive(test)} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100" title="Toggle active">
+                  <button onClick={() => toggleActive(test)} className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors" title="Toggle active">
                     {test.is_active ? <X className="w-4 h-4" /> : <Check className="w-4 h-4" />}
                   </button>
-                  <button onClick={() => handleDelete(test.id)} className="p-2 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-600" title="Delete">
+                  <button onClick={() => handleDelete(test.id)} className="p-2.5 rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors" title="Delete">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -275,14 +277,14 @@ function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreate
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-slate-200 px-5 py-4 flex items-center justify-between">
-          <h3 className="font-bold text-slate-800">Create New Test</h3>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-100"><X className="w-5 h-5 text-slate-500" /></button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="absolute inset-0" onClick={onClose} />
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 px-6 py-5 flex items-center justify-between">
+          <h3 className="text-xl font-bold text-slate-800 odia-text">ନୂଆ ଟେଷ୍ଟ ତିଆରି</h3>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
         </div>
-        <div className="p-5 space-y-4">
+        <div className="p-6 space-y-4">
           <AdminField label="Test Title" placeholder="e.g., English Mock Test — At the High School" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
           <div className="grid grid-cols-2 gap-3">
             <AdminField label="Subject" placeholder="English" value={form.subject} onChange={(v) => setForm({ ...form, subject: v })} />
@@ -300,16 +302,16 @@ function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreate
                 min={1}
                 value={form.duration_minutes}
                 onChange={(e) => setForm({ ...form, duration_minutes: parseInt(e.target.value) || 90 })}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
               />
             </div>
             <AdminField label="Prepared By" placeholder="School name" value={form.prepared_by} onChange={(v) => setForm({ ...form, prepared_by: v })} />
           </div>
-          {error && <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-lg p-3"><AlertCircle className="w-4 h-4" />{error}</div>}
+          {error && <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl p-3"><AlertCircle className="w-4 h-4" />{error}</div>}
         </div>
-        <div className="sticky bottom-0 bg-white border-t border-slate-200 px-5 py-4 flex gap-3 justify-end">
-          <button onClick={onClose} className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50">Cancel</button>
-          <button onClick={handleSave} disabled={saving} className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 disabled:opacity-60">
+        <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-slate-200 px-6 py-5 flex gap-3 justify-end">
+          <button onClick={onClose} className="px-5 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors">Cancel</button>
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors disabled:opacity-60 shadow-md">
             {saving ? "Creating..." : "Create Test"}
           </button>
         </div>
@@ -327,7 +329,7 @@ function AdminField({ label, placeholder, value, onChange }: { label: string; pl
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="odia-input w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="odia-input w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
       />
     </div>
   );
@@ -362,33 +364,33 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
+    <div className="max-w-5xl mx-auto px-4 py-6 bg-slate-50 min-h-screen">
       {/* Back */}
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 mb-4 font-medium">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 mb-5 font-semibold transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Tests
       </button>
 
       {/* Test Info Card */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 mb-6">
+      <div className="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-6 mb-6">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="min-w-0">
-            <h2 className="text-lg font-bold text-slate-800">{test.title}</h2>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
-              {test.subject && <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5" /> {test.subject}</span>}
-              {test.topic && <span>{test.topic}</span>}
-              <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {test.duration_minutes} min</span>
-              <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {test.session}</span>
+            <h2 className="text-2xl font-bold text-slate-800 odia-text">{test.title}</h2>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-slate-500 mt-1.5">
+              {test.subject && <span className="flex items-center gap-1.5 odia-text"><BookOpen className="w-4 h-4" /> {test.subject}</span>}
+              {test.topic && <span className="odia-text">{test.topic}</span>}
+              <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {test.duration_minutes} min</span>
+              <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {test.session}</span>
             </div>
           </div>
-          <button onClick={() => setEditingTest(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 flex-shrink-0">
+          <button onClick={() => setEditingTest(true)} className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors flex-shrink-0">
             <Edit2 className="w-4 h-4" /> Edit
           </button>
         </div>
-        <div className="flex items-center gap-3 pt-3 border-t border-slate-100">
-          <span className="text-xs text-slate-500">{questions.length} questions</span>
+        <div className="flex items-center gap-4 pt-3 border-t-2 border-slate-100">
+          <span className="text-sm text-slate-500 font-medium">{questions.length} questions</span>
           <button
             onClick={() => setShowAddQuestion(true)}
-            className="ml-auto flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700"
+            className="ml-auto flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-md"
           >
             <Plus className="w-4 h-4" /> Add Question
           </button>
@@ -397,45 +399,45 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
 
       {/* Questions List */}
       {loading ? (
-        <div className="flex items-center justify-center py-16 text-slate-400">
-          <Loader2 className="w-6 h-6 animate-spin" />
+        <div className="flex items-center justify-center py-20 text-slate-400">
+          <Loader2 className="w-8 h-8 animate-spin" />
         </div>
       ) : questions.length === 0 ? (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-12 text-center">
-          <ListChecks className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-sm text-slate-500 mb-4">No questions in this test yet.</p>
-          <button onClick={() => setShowAddQuestion(true)} className="text-sm text-blue-600 font-medium hover:underline">
+        <div className="bg-white border-2 border-slate-200 rounded-2xl p-16 text-center shadow-sm">
+          <ListChecks className="w-14 h-14 text-slate-300 mx-auto mb-4" />
+          <p className="text-lg text-slate-500 mb-4 font-medium">No questions in this test yet.</p>
+          <button onClick={() => setShowAddQuestion(true)} className="text-sm text-blue-600 font-semibold hover:underline">
             Add the first question
           </button>
         </div>
       ) : (
         <div className="space-y-3">
           {questions.map((q, idx) => (
-            <div key={q.id} className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
-              <div className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs">
+            <div key={q.id} className="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-5 hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm">
                   {idx + 1}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="odia-font text-sm font-semibold text-slate-800 mb-2">{q.question_text}</p>
-                  <div className="grid grid-cols-2 gap-1.5 text-xs">
+                  <p className="odia-text text-base font-semibold text-slate-800 mb-3">{q.question_text}</p>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
                     {[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, i) => (
-                      <div key={i} className={`flex items-center gap-1.5 px-2 py-1 rounded ${
-                        OPTION_LABELS[i] === q.correct_answer ? "bg-green-50 text-green-700 font-medium" : "text-slate-500"
+                      <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-xl ${
+                        OPTION_LABELS[i] === q.correct_answer ? "bg-green-50 text-green-700 font-semibold border-2 border-green-200" : "bg-slate-50 text-slate-600"
                       }`}>
                         <span className="font-bold">{OPTION_LABELS[i]}.</span>
-                        <span className="odia-font truncate">{opt}</span>
-                        {OPTION_LABELS[i] === q.correct_answer && <Check className="w-3 h-3 ml-auto flex-shrink-0" />}
+                        <span className="odia-text truncate">{opt}</span>
+                        {OPTION_LABELS[i] === q.correct_answer && <Check className="w-4 h-4 ml-auto flex-shrink-0" />}
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-col gap-1 flex-shrink-0">
-                  <button onClick={() => setEditingQuestion(q)} className="p-1.5 rounded text-slate-400 hover:bg-slate-100 hover:text-blue-600">
-                    <Edit2 className="w-3.5 h-3.5" />
+                <div className="flex flex-col gap-1.5 flex-shrink-0">
+                  <button onClick={() => setEditingQuestion(q)} className="p-2 rounded-xl text-slate-400 hover:bg-slate-100 hover:text-blue-600 transition-colors">
+                    <Edit2 className="w-4 h-4" />
                   </button>
-                  <button onClick={() => handleDeleteQuestion(q.id)} className="p-1.5 rounded text-slate-400 hover:bg-red-50 hover:text-red-600">
-                    <Trash2 className="w-3.5 h-3.5" />
+                  <button onClick={() => handleDeleteQuestion(q.id)} className="p-2 rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -531,14 +533,14 @@ function QuestionModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-slate-200 px-5 py-4 flex items-center justify-between">
-          <h3 className="font-bold text-slate-800">{existing ? "Edit Question" : "Add Question"}</h3>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-100"><X className="w-5 h-5 text-slate-500" /></button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="absolute inset-0" onClick={onClose} />
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 px-6 py-5 flex items-center justify-between">
+          <h3 className="text-xl font-bold text-slate-800 odia-text">{existing ? "ପ୍ରଶ୍ନ ସମ୍ପାଦନ" : "ନୂଆ ପ୍ରଶ୍ନ"}</h3>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
         </div>
-        <div className="p-5 space-y-4">
+        <div className="p-6 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">Question Text</label>
             <textarea
@@ -546,7 +548,7 @@ function QuestionModal({
               onChange={(e) => setForm({ ...form, question_text: e.target.value })}
               placeholder="Enter the question..."
               rows={3}
-              className="odia-input w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="odia-input w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent resize-none"
             />
           </div>
           {OPTION_LABELS.map((letter) => (
@@ -561,14 +563,14 @@ function QuestionModal({
                   value={form[`option_${letter.toLowerCase()}` as keyof typeof form]}
                   onChange={(e) => setForm({ ...form, [`option_${letter.toLowerCase()}`]: e.target.value })}
                   placeholder={`Option ${letter}`}
-                  className="odia-input flex-1 px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="odia-input flex-1 px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
                 />
                 <button
                   onClick={() => setForm({ ...form, correct_answer: letter })}
-                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex-shrink-0 ${
+                  className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors flex-shrink-0 ${
                     form.correct_answer === letter
                       ? "bg-green-600 text-white"
-                      : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
                   {form.correct_answer === letter ? <Check className="w-4 h-4" /> : "Set Correct"}
@@ -576,11 +578,11 @@ function QuestionModal({
               </div>
             </div>
           ))}
-          {error && <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-lg p-3"><AlertCircle className="w-4 h-4" />{error}</div>}
+          {error && <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl p-3"><AlertCircle className="w-4 h-4" />{error}</div>}
         </div>
-        <div className="sticky bottom-0 bg-white border-t border-slate-200 px-5 py-4 flex gap-3 justify-end">
-          <button onClick={onClose} className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50">Cancel</button>
-          <button onClick={handleSave} disabled={saving} className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 disabled:opacity-60">
+        <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-slate-200 px-6 py-5 flex gap-3 justify-end">
+          <button onClick={onClose} className="px-5 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors">Cancel</button>
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors disabled:opacity-60 shadow-md">
             {saving ? "Saving..." : "Save Question"}
           </button>
         </div>
@@ -616,14 +618,14 @@ function EditTestModal({ test, onClose, onSaved }: { test: TestRow; onClose: () 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-slate-200 px-5 py-4 flex items-center justify-between">
-          <h3 className="font-bold text-slate-800">Edit Test</h3>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-100"><X className="w-5 h-5 text-slate-500" /></button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="absolute inset-0" onClick={onClose} />
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 px-6 py-5 flex items-center justify-between">
+          <h3 className="text-xl font-bold text-slate-800 odia-text">ଟେଷ୍ଟ ସମ୍ପାଦନ</h3>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
         </div>
-        <div className="p-5 space-y-4">
+        <div className="p-6 space-y-4">
           <AdminField label="Test Title" placeholder="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
           <div className="grid grid-cols-2 gap-3">
             <AdminField label="Subject" placeholder="English" value={form.subject} onChange={(v) => setForm({ ...form, subject: v })} />
@@ -638,15 +640,15 @@ function EditTestModal({ test, onClose, onSaved }: { test: TestRow; onClose: () 
               <label className="block text-xs font-semibold text-slate-600 mb-1.5">Duration (minutes)</label>
               <input type="number" min={1} value={form.duration_minutes}
                 onChange={(e) => setForm({ ...form, duration_minutes: parseInt(e.target.value) || 90 })}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent" />
             </div>
             <AdminField label="Prepared By" placeholder="School" value={form.prepared_by} onChange={(v) => setForm({ ...form, prepared_by: v })} />
           </div>
-          {error && <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-lg p-3"><AlertCircle className="w-4 h-4" />{error}</div>}
+          {error && <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl p-3"><AlertCircle className="w-4 h-4" />{error}</div>}
         </div>
-        <div className="sticky bottom-0 bg-white border-t border-slate-200 px-5 py-4 flex gap-3 justify-end">
-          <button onClick={onClose} className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50">Cancel</button>
-          <button onClick={handleSave} disabled={saving} className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 disabled:opacity-60">
+        <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-slate-200 px-6 py-5 flex gap-3 justify-end">
+          <button onClick={onClose} className="px-5 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors">Cancel</button>
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors disabled:opacity-60 shadow-md">
             {saving ? "Saving..." : "Save Changes"}
           </button>
         </div>
@@ -712,8 +714,8 @@ function AttemptsViewer() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-16 text-slate-400">
-        <Loader2 className="w-6 h-6 animate-spin" />
+      <div className="flex items-center justify-center py-20 text-slate-400">
+        <Loader2 className="w-8 h-8 animate-spin" />
       </div>
     );
   }
@@ -721,31 +723,31 @@ function AttemptsViewer() {
   return (
     <div>
       {/* Controls */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name, roll, or school..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="kalinga-font w-full pl-11 pr-4 py-3 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
           />
         </div>
         <select
           value={filterTest}
           onChange={(e) => setFilterTest(e.target.value)}
-          className="px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          className="px-4 py-3 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent bg-white"
         >
           <option value="all">All Tests</option>
           {Object.values(tests).map((t) => (
-            <option key={t.id} value={t.id}>{t.title}</option>
+            <option key={t.id} value={t.id} className="odia-text">{t.title}</option>
           ))}
         </select>
         <button
           onClick={exportCSV}
           disabled={filtered.length === 0}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 text-white text-sm font-medium hover:bg-slate-900 disabled:opacity-50 flex-shrink-0"
+          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors disabled:opacity-50 flex-shrink-0 shadow-md"
         >
           <Download className="w-4 h-4" /> Export CSV
         </button>
@@ -753,22 +755,22 @@ function AttemptsViewer() {
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-12 text-center">
-          <Users className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-sm text-slate-500">No student attempts found.</p>
+        <div className="bg-white border-2 border-slate-200 rounded-2xl p-16 text-center shadow-sm">
+          <Users className="w-14 h-14 text-slate-300 mx-auto mb-4" />
+          <p className="text-lg text-slate-500 font-medium">No student attempts found.</p>
         </div>
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden sm:block bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="hidden sm:block bg-white rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200">
+              <thead className="bg-slate-50 border-b-2 border-slate-200">
                 <tr>
-                  <th className="text-left px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Student</th>
-                  <th className="text-left px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Test</th>
-                  <th className="text-center px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Score</th>
-                  <th className="text-center px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">%</th>
-                  <th className="text-center px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Grade</th>
+                  <th className="text-left px-5 py-4 font-semibold text-slate-700 text-xs uppercase tracking-wider">Student</th>
+                  <th className="text-left px-5 py-4 font-semibold text-slate-700 text-xs uppercase tracking-wider">Test</th>
+                  <th className="text-center px-5 py-4 font-semibold text-slate-700 text-xs uppercase tracking-wider">Score</th>
+                  <th className="text-center px-5 py-4 font-semibold text-slate-700 text-xs uppercase tracking-wider">%</th>
+                  <th className="text-center px-5 py-4 font-semibold text-slate-700 text-xs uppercase tracking-wider">Grade</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -778,16 +780,16 @@ function AttemptsViewer() {
                   const passed = pct >= 35;
                   const grade = pct >= 90 ? "A+" : pct >= 80 ? "A" : pct >= 70 ? "B" : pct >= 60 ? "C" : pct >= 50 ? "D" : pct >= 35 ? "E" : "F";
                   return (
-                    <tr key={a.id} className="hover:bg-slate-50">
-                      <td className="px-4 py-3">
-                        <p className="font-medium text-slate-800">{a.student_name}</p>
+                    <tr key={a.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-5 py-4">
+                        <p className="font-semibold text-slate-800 odia-text">{a.student_name}</p>
                         <p className="text-xs text-slate-500">Roll: {a.roll_number} &middot; {a.school_name}</p>
                       </td>
-                      <td className="px-4 py-3 text-slate-600 text-xs">{test?.title || "—"}</td>
-                      <td className="px-4 py-3 text-center font-medium text-slate-700">{a.score}/{a.total_questions}</td>
-                      <td className={`px-4 py-3 text-center font-bold ${passed ? "text-green-600" : "text-red-600"}`}>{pct}%</td>
-                      <td className="px-4 py-3 text-center">
-                        <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-bold ${
+                      <td className="px-5 py-4 text-slate-600 text-sm odia-text">{test?.title || "—"}</td>
+                      <td className="px-5 py-4 text-center font-semibold text-slate-700">{a.score}/{a.total_questions}</td>
+                      <td className={`px-5 py-4 text-center font-bold ${passed ? "text-green-600" : "text-red-600"}`}>{pct}%</td>
+                      <td className="px-5 py-4 text-center">
+                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
                           passed ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
                         }`}>{grade}</span>
                       </td>
@@ -806,23 +808,23 @@ function AttemptsViewer() {
               const passed = pct >= 35;
               const grade = pct >= 90 ? "A+" : pct >= 80 ? "A" : pct >= 70 ? "B" : pct >= 60 ? "C" : pct >= 50 ? "D" : pct >= 35 ? "E" : "F";
               return (
-                <div key={a.id} className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+                <div key={a.id} className="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-5">
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="min-w-0">
-                      <p className="font-bold text-slate-800 text-sm">{a.student_name}</p>
-                      <p className="text-xs text-slate-500">Roll: {a.roll_number}</p>
-                      <p className="text-xs text-slate-500 truncate">{a.school_name}</p>
+                      <p className="font-bold text-slate-800 text-base odia-text">{a.student_name}</p>
+                      <p className="text-sm text-slate-500">Roll: {a.roll_number}</p>
+                      <p className="text-sm text-slate-500 truncate odia-text">{a.school_name}</p>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <p className={`text-lg font-bold ${passed ? "text-green-600" : "text-red-600"}`}>{pct}%</p>
-                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-bold ${
+                      <p className={`text-xl font-bold ${passed ? "text-green-600" : "text-red-600"}`}>{pct}%</p>
+                      <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
                         passed ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
                       }`}>{grade}</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
-                    <span className="truncate">{test?.title || "—"}</span>
-                    <span className="flex-shrink-0 ml-2">{a.score}/{a.total_questions}</span>
+                  <div className="flex items-center justify-between pt-2 border-t-2 border-slate-100 text-sm text-slate-500">
+                    <span className="truncate odia-text">{test?.title || "—"}</span>
+                    <span className="flex-shrink-0 ml-2 font-semibold">{a.score}/{a.total_questions}</span>
                   </div>
                 </div>
               );
