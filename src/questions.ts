@@ -864,7 +864,7 @@ export const questions: Question[] = [
 ];
 
 export const TEST_CONFIG = {
-  title: "JITAN ONLINE TEST",
+  title: "JITAN'S ONLINE TEST",
   subtitle: "FOR CLASS 10TH",
   session: "2026–2027 Session",
   subject: "English",

@@ -39,6 +39,7 @@ export interface QuestionRow {
   option_c: string;
   option_d: string;
   correct_answer: string;
+  image_url?: string | null;
   display_order: number;
   created_at: string;
 }

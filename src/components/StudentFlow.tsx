@@ -671,6 +671,16 @@ function TestScreen({
               </h2>
             </div>
 
+            {currentQuestion.image_url && (
+              <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
+                <img
+                  src={currentQuestion.image_url}
+                  alt={`Diagram for question ${currentIndex + 1}`}
+                  className="mx-auto max-h-[420px] max-w-full rounded-lg object-contain"
+                />
+              </div>
+            )}
+
             <div className="space-y-3">
               {OPTION_LABELS.map((letter, optIdx) => {
                 const optionText = [

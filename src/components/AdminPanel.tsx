@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Shield, BookOpen, Plus, Clock, Users, FileText,
   Trash2, Edit2, X, Check, AlertCircle, Loader2, ArrowLeft,
-  Layers, ListChecks, Calendar, Award, Search, Download,
+  Layers, ListChecks, Calendar, Award, Search, Download, ImagePlus,
 } from "lucide-react";
 import { firebaseDb as supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/firebase";
 
@@ -478,6 +478,25 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
 
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+const MAX_QUESTION_IMAGE_BYTES = 5 * 1024 * 1024;
+
+async function uploadQuestionImage(file: File): Promise<string> {
+  if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
+    throw new Error("Cloudinary image uploads are not configured.");
+  }
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    method: "POST", body: formData,
+  });
+  const result = await response.json() as { secure_url?: string; error?: { message?: string } };
+  if (!response.ok || !result.secure_url) throw new Error(result.error?.message || "Image upload failed.");
+  return result.secure_url;
+}
+
 function QuestionModal({
   testId, order, existing, onClose, onSaved,
 }: {
@@ -496,7 +515,26 @@ function QuestionModal({
     correct_answer: existing?.correct_answer || "A",
   });
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState(existing?.image_url || "");
+  const [imagePreview, setImagePreview] = useState(existing?.image_url || "");
+
+  const handleImageChange = (file: File | undefined) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) { setError("Please select an image file."); return; }
+    if (file.size > MAX_QUESTION_IMAGE_BYTES) { setError("Image must be 5 MB or smaller."); return; }
+    setError("");
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImageUrl("");
+    setImagePreview("");
+  };
 
   const handleSave = async () => {
     if (!form.question_text.trim()) { setError("Question text is required"); return; }
@@ -504,6 +542,19 @@ function QuestionModal({
       setError("All four options are required"); return;
     }
     setSaving(true);
+    let uploadedImageUrl = imageUrl;
+    try {
+      if (imageFile) {
+        setUploading(true);
+        uploadedImageUrl = await uploadQuestionImage(imageFile);
+      }
+    } catch (uploadError) {
+      setSaving(false);
+      setUploading(false);
+      setError(uploadError instanceof Error ? uploadError.message : "Could not upload image.");
+      return;
+    }
+    setUploading(false);
     if (existing) {
       const { error } = await supabase.from("questions").update({
         question_text: form.question_text.trim(),
@@ -512,6 +563,7 @@ function QuestionModal({
         option_c: form.option_c.trim(),
         option_d: form.option_d.trim(),
         correct_answer: form.correct_answer,
+        image_url: uploadedImageUrl || null,
       }).eq("id", existing.id);
       setSaving(false);
       if (error) { setError("Could not save. Try again."); return; }
@@ -524,6 +576,7 @@ function QuestionModal({
         option_c: form.option_c.trim(),
         option_d: form.option_d.trim(),
         correct_answer: form.correct_answer,
+        image_url: uploadedImageUrl || "",
         display_order: order + 1,
       });
       setSaving(false);
@@ -550,6 +603,25 @@ function QuestionModal({
               rows={3}
               className="odia-input w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent resize-none"
             />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Diagram or Question Image <span className="font-normal text-slate-400">(optional)</span></label>
+            {imagePreview ? (
+              <div className="rounded-xl border-2 border-slate-200 p-3 bg-slate-50">
+                <img src={imagePreview} alt="Question diagram preview" className="max-h-52 w-auto max-w-full rounded-lg object-contain mx-auto" />
+                <div className="flex items-center justify-between gap-3 mt-3">
+                  <span className="text-xs text-slate-500 truncate">{imageFile?.name || "Current question image"}</span>
+                  <button type="button" onClick={removeImage} className="text-xs font-semibold text-red-600 hover:underline">Remove image</button>
+                </div>
+              </div>
+            ) : (
+              <label className="flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-4 py-6 cursor-pointer hover:border-slate-500 hover:bg-slate-50 transition-colors">
+                <ImagePlus className="w-6 h-6 text-slate-400" />
+                <span className="text-sm font-semibold text-slate-600">Choose diagram image</span>
+                <span className="text-xs text-slate-400">PNG, JPG, or WEBP · maximum 5 MB</span>
+                <input type="file" accept="image/png,image/jpeg,image/webp" className="sr-only" onChange={(e) => handleImageChange(e.target.files?.[0])} />
+              </label>
+            )}
           </div>
           {OPTION_LABELS.map((letter) => (
             <div key={letter}>
@@ -583,7 +655,7 @@ function QuestionModal({
         <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-slate-200 px-6 py-5 flex gap-3 justify-end">
           <button onClick={onClose} className="px-5 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors">Cancel</button>
           <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors disabled:opacity-60 shadow-md">
-            {saving ? "Saving..." : "Save Question"}
+            {uploading ? "Uploading image..." : saving ? "Saving..." : "Save Question"}
           </button>
         </div>
       </div>

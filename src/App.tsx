@@ -143,7 +143,7 @@ function TopBar({ onHome }: { onHome: () => void }) {
         </button>
         <div className="flex items-center gap-2">
           <img src={logo} alt="Jitan logo" className="w-7 h-7 rounded-md object-cover" />
-          <span className="text-sm font-bold text-slate-800">Jitan Online Test</span>
+          <span className="text-sm font-bold text-slate-800">Jitan's Online Test</span>
         </div>
       </div>
     </div>

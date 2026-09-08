@@ -290,7 +290,7 @@ export function LandingPage({
           </div>
           
           <p className="text-xs text-gray-400 mb-4">
-            © 2026 Jitan Online Test Platform · Developed by{" "}
+            © 2026 Jitan's Online Test Platform · Developed by{" "}
             <a
               href="https://jaganwebsolutions.netlify.app"
               target="_blank"
