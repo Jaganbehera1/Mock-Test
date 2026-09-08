@@ -666,20 +666,21 @@ function TestScreen({
               <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-gray-800 flex items-center justify-center font-bold text-sm">
                 {currentIndex + 1}
               </div>
-              <h2 className="kalinga-font text-base sm:text-lg font-semibold text-slate-800 leading-relaxed pt-1">
-                {currentQuestion.question_text}
-              </h2>
-            </div>
-
-            {currentQuestion.image_url && (
-              <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
-                <img
-                  src={currentQuestion.image_url}
-                  alt={`Diagram for question ${currentIndex + 1}`}
-                  className="mx-auto max-h-[420px] max-w-full rounded-lg object-contain"
-                />
+              <div className="flex min-w-0 flex-1 items-start justify-between gap-3">
+                <h2 className="kalinga-font min-w-0 flex-1 text-base sm:text-lg font-semibold text-slate-800 leading-relaxed pt-1">
+                  {currentQuestion.question_text}
+                </h2>
+                {currentQuestion.image_url && (
+                  <div className="flex h-[112px] w-[88px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-1.5 sm:h-[140px] sm:w-[110px]">
+                    <img
+                      src={currentQuestion.image_url}
+                      alt={`Diagram for question ${currentIndex + 1}`}
+                      className="max-h-full max-w-full rounded object-contain"
+                    />
+                  </div>
+                )}
               </div>
-            )}
+            </div>
 
             <div className="space-y-3">
               {OPTION_LABELS.map((letter, optIdx) => {
