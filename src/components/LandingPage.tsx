@@ -1,6 +1,7 @@
 import React from "react";
-import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap } from "lucide-react";
+import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap, Sparkles } from "lucide-react";
 import logo from "@/images/JJLogo.jpeg";
+import heroLogo from "@/images/logo.jpeg";
 
 const CONTACT_NUMBER = "7978966065";
 const whatsappMessage = encodeURIComponent("I want to develop one application please contact me");
@@ -52,91 +53,116 @@ export function LandingPage({
         </div>
       </nav>
 
-      {/* Hero Section - Light Patriotic Background */}
+      {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-green-50">
-        {/* Decorative circles in light tricolor */}
+        {/* Decorative background circles */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#FF9933]/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#138808]/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-[#FF9933]/5 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/3 right-10 w-48 h-48 bg-[#138808]/5 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-1/3 left-10 w-48 h-48 bg-[#FF9933]/5 rounded-full blur-2xl"></div>
+          <div className="absolute top-0 left-0 w-96 h-96 bg-[#FF9933]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#138808]/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-[#FF9933]/3 rounded-full blur-3xl"></div>
         </div>
 
-        {/* Light Ashoka Chakra-inspired decoration */}
-        <div className="absolute right-10 top-20 opacity-5 hidden lg:block">
-          <div className="w-64 h-64 rounded-full border-4 border-[#000080]/20 flex items-center justify-center">
-            <div className="w-48 h-48 rounded-full border-4 border-[#000080]/20 flex items-center justify-center">
-              <div className="w-32 h-32 rounded-full border-4 border-[#000080]/20 flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-[#000080]/20" />
+        {/* Ashoka Chakra decorative element */}
+        <div className="absolute right-10 top-20 opacity-[0.03] hidden lg:block">
+          <div className="w-64 h-64 rounded-full border-4 border-[#000080] flex items-center justify-center">
+            <div className="w-48 h-48 rounded-full border-4 border-[#000080] flex items-center justify-center">
+              <div className="w-32 h-32 rounded-full border-4 border-[#000080] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[#000080]" />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 pt-16 pb-20 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4 flex-wrap">
-            <span className="px-4 py-1.5 rounded-full bg-[#FF9933]/10 text-[#FF9933] text-xs font-semibold border border-[#FF9933]/20">
-              🇮🇳 Made in India
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-[#138808]/10 text-[#138808] text-xs font-semibold border border-[#138808]/20">
-              For Indian Students
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold border border-blue-200">
-              🎯 BSE, Odisha
-            </span>
-          </div>
+        <div className="relative max-w-6xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(320px,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+            {/* Hero Image - FIRST on mobile, LEFT on desktop */}
+            <div className="flex items-center justify-center lg:justify-start order-1 lg:order-1">
+              <div className="relative">
+                {/* Glow effect behind image */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FF9933]/20 via-white/40 to-[#138808]/20 rounded-3xl blur-2xl scale-95"></div>
+                {/* Decorative rings */}
+                <div className="absolute -inset-4 rounded-full border-2 border-[#FF9933]/20 animate-pulse hidden sm:block"></div>
+                <div className="absolute -inset-8 rounded-full border border-[#138808]/10 hidden sm:block"></div>
+                {/* Main image */}
+                <div className="relative bg-white rounded-3xl shadow-2xl p-2 border border-slate-200/60">
+                  <img
+                    src={heroLogo}
+                    alt="JITAN Online Test Platform"
+                    className="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] h-auto rounded-2xl object-cover"
+                  />
+                </div>
+              </div>
+            </div>
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-4">
-            <span className="text-[#FF9933]">JITAN</span>
-            <span className="text-gray-800">'S Online</span>
-            <br />
-            <span className="bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
-              Test Platform
-            </span>
-          </h1>
-          
-          <p className="text-[#FF9933] text-base sm:text-lg font-semibold mb-2">
-            For Class 10th &middot; 2026–2027 Session
-          </p>
-          <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            A professional online examination platform for schools — take mock tests,
-            track student performance, and manage question banks with ease.
-          </p>
+            {/* Text Content - SECOND on mobile, RIGHT on desktop */}
+            <div className="text-center lg:text-left order-2 lg:order-2">
+              <div className="flex items-center justify-center gap-3 mb-6 flex-wrap lg:justify-start">
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FF9933]/10 text-[#FF9933] text-xs font-semibold border border-[#FF9933]/20">
+                  🇮🇳 Made in India
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#138808]/10 text-[#138808] text-xs font-semibold border border-[#138808]/20">
+                  For Indian Students
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold border border-blue-200">
+                  🎯 BSE, Odisha
+                </span>
+              </div>
 
-          {/* CTA Buttons */}
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center max-w-md sm:max-w-none mx-auto">
-            <button
-              onClick={onStudent}
-              className="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-105 transition-all active:scale-95"
-            >
-              <BookOpen className="w-5 h-5" />
-              Take a Test
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button
-              onClick={onAdmin}
-              className="flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#138808] to-[#0d6605] text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-105 transition-all active:scale-95"
-            >
-              <Shield className="w-5 h-5" />
-              Admin Panel
-            </button>
-          </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4 leading-tight">
+                <span className="text-[#FF9933]">JITAN'S</span>
+                <br />
+                <span className="bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
+                  Online Test
+                </span>
+              </h1>
 
-          {/* Trust indicators */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#138808]" />
-              Secure Platform
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#138808]" />
-              Instant Results
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#138808]" />
-              Free for Schools
-            </span>
+              <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
+                <span className="h-1 w-8 bg-[#FF9933] rounded-full"></span>
+                <span className="h-1 w-8 bg-white border border-gray-200 rounded-full"></span>
+                <span className="h-1 w-8 bg-[#138808] rounded-full"></span>
+              </div>
+
+              <p className="text-[#FF9933] text-base sm:text-lg font-semibold mb-2">
+                For Class 10th &middot; 2026–2027 Session
+              </p>
+              <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                A professional online examination platform for schools — take mock tests,
+                track student performance, and manage question banks with ease.
+              </p>
+
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-md sm:max-w-none mx-auto lg:mx-0">
+                <button
+                  onClick={onStudent}
+                  className="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-105 transition-all active:scale-95"
+                >
+                  <BookOpen className="w-5 h-5" />
+                  Take a Test
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button
+                  onClick={onAdmin}
+                  className="flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#138808] to-[#0d6605] text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-105 transition-all active:scale-95"
+                >
+                  <Shield className="w-5 h-5" />
+                  Admin Panel
+                </button>
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-500">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#138808]" />
+                  Secure Platform
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#138808]" />
+                  Instant Results
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#138808]" />
+                  Free for Schools
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -191,7 +217,6 @@ export function LandingPage({
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/20 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#138808]/20 to-transparent"></div>
-          {/* Light Ashoka Chakra dots pattern */}
           <div className="absolute inset-0 opacity-[0.02]">
             <div className="absolute top-10 left-10 w-2 h-2 rounded-full bg-[#000080]"></div>
             <div className="absolute top-20 right-20 w-2 h-2 rounded-full bg-[#000080]"></div>
@@ -274,7 +299,6 @@ export function LandingPage({
       {/* Footer - Light Indian Theme */}
       <div className="bg-gray-50 border-t-2 border-[#FF9933]/30 py-8 relative">
         <div className="max-w-6xl mx-auto px-4 text-center relative">
-          {/* Indian Flag Footer */}
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF9933] via-white to-[#138808] flex items-center justify-center text-white font-bold text-xs shadow-sm">
               🇮🇳
