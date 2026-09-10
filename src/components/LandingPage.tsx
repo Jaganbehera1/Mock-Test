@@ -1,5 +1,5 @@
 import React from "react";
-import { GraduationCap, BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, Sparkles, BarChart3, Trophy, Zap } from "lucide-react";
+import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap } from "lucide-react";
 import logo from "@/images/JJLogo.jpeg";
 
 const CONTACT_NUMBER = "7978966065";
@@ -30,7 +30,7 @@ export function LandingPage({
               <span className="text-xl font-bold bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
                 JITAN
               </span>
-              <span className="text-xl font-bold text-gray-800"> Online Test</span>
+              <span className="text-xl font-bold text-gray-800">'S Online Test</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -83,13 +83,13 @@ export function LandingPage({
               For Indian Students
             </span>
             <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold border border-blue-200">
-              🎯 CBSE Pattern
+              🎯 BSE, Odisha
             </span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-4">
             <span className="text-[#FF9933]">JITAN</span>
-            <span className="text-gray-800"> Online</span>
+            <span className="text-gray-800">'S Online</span>
             <br />
             <span className="bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
               Test Platform

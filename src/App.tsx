@@ -1,5 +1,5 @@
 import { FormEvent, useState, useEffect } from "react";
-import { GraduationCap, Shield, Home, LockKeyhole, Mail, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Shield, Home, LockKeyhole, Mail, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { LandingPage } from "@/components/LandingPage";
 import { StudentFlow } from "@/components/StudentFlow";
 import { AdminPanel } from "@/components/AdminPanel";
@@ -15,8 +15,8 @@ function App() {
 
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
-    if (hash === "admin") setView("admin");
-    else if (hash === "student") setView("student");
+    if (hash.startsWith("admin")) setView("admin");
+    else if (hash.startsWith("student")) setView("student");
   }, []);
 
   const navigate = (v: View) => {
@@ -27,10 +27,11 @@ function App() {
   };
 
   if (view === "student") {
+    const hashParams = new URLSearchParams(window.location.hash.split("?")[1] || "");
     return (
       <div className="min-h-screen bg-slate-50">
         <TopBar onHome={() => navigate("landing")} />
-        <StudentFlow onExit={() => navigate("landing")} />
+        <StudentFlow onExit={() => navigate("landing")} sharedTestId={hashParams.get("test") || undefined} />
       </div>
     );
   }
@@ -143,7 +144,7 @@ function TopBar({ onHome }: { onHome: () => void }) {
         </button>
         <div className="flex items-center gap-2">
           <img src={logo} alt="Jitan logo" className="w-7 h-7 rounded-md object-cover" />
-          <span className="text-sm font-bold text-slate-800">Jitan's Online Test</span>
+          <span className="text-sm font-bold text-slate-800">JITAN'S Online Test Platform</span>
         </div>
       </div>
     </div>

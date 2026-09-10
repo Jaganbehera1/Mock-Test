@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Clock, CheckCircle2, Circle, ChevronLeft, ChevronRight, Flag,
   AlertCircle, Eye, RotateCcw, X, Menu, BookOpen, Calendar, Timer,
-  User, GraduationCap, Award, Loader2,
+  User, GraduationCap, Award, Loader2, Folder, FolderOpen,
 } from "lucide-react";
 import { firebaseDb as supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/firebase";
 
@@ -11,6 +11,13 @@ type AnswerMap = Record<string, string>;
 type FlagMap = Record<string, boolean>;
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
+const TEST_FOLDERS = ["Math", "Geography", "History", "English", "Odia", "Science"];
+
+function getStudentFolder(subject: string) {
+  const normalized = subject.trim().toLowerCase();
+  if (normalized === "maths" || normalized === "mathematics") return "Math";
+  return TEST_FOLDERS.find((folder) => folder.toLowerCase() === normalized) || subject.trim() || "Other Tests";
+}
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -18,7 +25,7 @@ function formatTime(seconds: number): string {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-export function StudentFlow({ onExit }: { onExit: () => void }) {
+export function StudentFlow({ onExit, sharedTestId }: { onExit: () => void; sharedTestId?: string }) {
   const [phase, setPhase] = useState<Phase>("register");
   const [student, setStudent] = useState({ name: "", roll: "", school: "" });
   const [selectedTest, setSelectedTest] = useState<TestRow | null>(null);
@@ -39,6 +46,7 @@ export function StudentFlow({ onExit }: { onExit: () => void }) {
     return (
       <TestSelectScreen
         student={student}
+        sharedTestId={sharedTestId}
         onSelect={(test) => {
           setSelectedTest(test);
           setPhase("test");
@@ -201,10 +209,12 @@ function FormField({
 
 function TestSelectScreen({
   student,
+  sharedTestId,
   onSelect,
   onBack,
 }: {
   student: { name: string; roll: string; school: string };
+  sharedTestId?: string;
   onSelect: (test: TestRow) => void;
   onBack: () => void;
 }) {
@@ -212,15 +222,22 @@ function TestSelectScreen({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [questionCounts, setQuestionCounts] = useState<Record<string, number>>({});
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
+  const onSelectRef = useRef(onSelect);
+
+  onSelectRef.current = onSelect;
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const { data, error } = await supabase
+      let query = supabase
         .from("tests")
         .select("*")
         .eq("is_active", true)
         .order("created_at", { ascending: false });
+      if (sharedTestId) query = query.eq("id", sharedTestId);
+
+      const { data, error } = await query;
 
       if (error) {
         setError("Could not load tests. Please try again.");
@@ -241,8 +258,15 @@ function TestSelectScreen({
       }
       setQuestionCounts(counts);
       setLoading(false);
+      if (sharedTestId && rows.length === 1 && (counts[rows[0].id] || 0) > 0) {
+        onSelectRef.current(rows[0]);
+      }
     })();
-  }, []);
+  }, [sharedTestId]);
+
+  const folders = Array.from(new Set(tests.map((test) => getStudentFolder(test.subject))));
+  const folderTests = selectedFolder ? tests.filter((test) => getStudentFolder(test.subject) === selectedFolder) : [];
+  const units = Array.from(new Set(folderTests.map((test) => test.topic.trim() || "General Tests")));
 
   return (
     <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
@@ -266,8 +290,8 @@ function TestSelectScreen({
           </button>
         </div>
 
-        <h2 className="text-xl font-bold text-slate-800 mb-1">Available Tests</h2>
-        <p className="text-sm text-slate-600 mb-6">Select a test to begin. Good luck!</p>
+        <h2 className="text-xl font-bold text-slate-800 mb-1">Choose a Subject Folder</h2>
+        <p className="text-sm text-slate-600 mb-6">Open a subject, then choose a unit test.</p>
 
         {loading ? (
           <div className="flex items-center justify-center py-20 text-slate-500">
@@ -285,16 +309,50 @@ function TestSelectScreen({
             <p className="text-sm text-slate-500">No tests are available yet. Please check back later.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {tests.map((test) => (
-              <TestCard
-                key={test.id}
-                test={test}
-                questionCount={questionCounts[test.id] || 0}
-                onSelect={() => onSelect(test)}
-              />
-            ))}
-          </div>
+          <>
+            {!selectedFolder ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {folders.map((folder) => (
+                  <button
+                    key={folder}
+                    onClick={() => setSelectedFolder(folder)}
+                    className="text-left bg-white rounded-xl border border-slate-200 shadow-sm p-5 hover:shadow-md hover:border-[#FF9933] transition-all group"
+                  >
+                    <Folder className="w-9 h-9 text-[#FF9933] mb-4" />
+                    <h3 className="font-bold text-slate-800 text-base">{folder}</h3>
+                    <p className="text-xs text-slate-500 mt-1">
+                      {tests.filter((test) => getStudentFolder(test.subject) === folder).length} unit test(s)
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#FF9933] group-hover:translate-x-1 transition-transform">
+                      Open folder <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div>
+                <button onClick={() => setSelectedFolder(null)} className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-[#FF9933] mb-4">
+                  <ChevronLeft className="w-4 h-4" /> All subject folders
+                </button>
+                <div className="flex items-center gap-3 mb-5">
+                  <FolderOpen className="w-6 h-6 text-[#FF9933]" />
+                  <h3 className="text-lg font-bold text-slate-800">{selectedFolder}</h3>
+                </div>
+                <div className="space-y-6">
+                  {units.map((unit) => (
+                    <section key={unit}>
+                      <h4 className="text-sm font-bold text-slate-700 mb-3">{unit}</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {folderTests.filter((test) => (test.topic.trim() || "General Tests") === unit).map((test) => (
+                          <TestCard key={test.id} test={test} questionCount={questionCounts[test.id] || 0} onSelect={() => onSelect(test)} />
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

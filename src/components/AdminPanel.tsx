@@ -2,11 +2,22 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Shield, BookOpen, Plus, Clock, Users, FileText,
   Trash2, Edit2, X, Check, AlertCircle, Loader2, ArrowLeft,
-  Layers, ListChecks, Calendar, Award, Search, Download, ImagePlus,
+  Layers, ListChecks, Calendar, Award, Search, Download, ImagePlus, Share2, Folder,
 } from "lucide-react";
 import { firebaseDb as supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/firebase";
 
 type AdminTab = "dashboard" | "tests" | "attempts";
+const TEST_FOLDERS = ["Math", "Geography", "History", "English", "Odia", "Science"];
+
+function getFolderName(subject: string) {
+  const normalized = subject.trim().toLowerCase();
+  if (normalized === "maths" || normalized === "mathematics") return "Math";
+  return TEST_FOLDERS.find((folder) => folder.toLowerCase() === normalized) || "Other Tests";
+}
+
+function getTestShareUrl(testId: string) {
+  return `${window.location.origin}${window.location.pathname}#student?test=${encodeURIComponent(testId)}`;
+}
 
 export function AdminPanel() {
   const [tab, setTab] = useState<AdminTab>("dashboard");
@@ -142,6 +153,8 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
   const [showCreate, setShowCreate] = useState(false);
   const [questionCounts, setQuestionCounts] = useState<Record<string, number>>({});
   const [attemptCounts, setAttemptCounts] = useState<Record<string, number>>({});
+  const [copiedTestId, setCopiedTestId] = useState<string | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
 
   const fetchTests = useCallback(async () => {
     setLoading(true);
@@ -177,6 +190,23 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
     fetchTests();
   };
 
+  const shareTest = async (test: TestRow) => {
+    await navigator.clipboard.writeText(getTestShareUrl(test.id));
+    setCopiedTestId(test.id);
+    window.setTimeout(() => setCopiedTestId((current) => current === test.id ? null : current), 2000);
+  };
+
+  const moveTest = async (test: TestRow, folder: string) => {
+    await supabase.from("tests").update({ subject: folder }).eq("id", test.id);
+    await fetchTests();
+  };
+
+  const folderCounts = TEST_FOLDERS.reduce<Record<string, number>>((counts, folder) => {
+    counts[folder] = tests.filter((test) => getFolderName(test.subject) === folder).length;
+    return counts;
+  }, {});
+  const otherCount = tests.filter((test) => getFolderName(test.subject) === "Other Tests").length;
+
   return (
     <div>
       <div className="flex items-center justify-between mb-5">
@@ -189,6 +219,29 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
           New Test
         </button>
       </div>
+
+      {!loading && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+          {TEST_FOLDERS.map((folder) => (
+            <button
+              key={folder}
+              onClick={() => setSelectedFolder((current) => current === folder ? null : folder)}
+              className={`text-left bg-white border-2 rounded-xl px-3 py-3 shadow-sm transition-colors ${
+                selectedFolder === folder ? "border-[#FF9933] bg-orange-50" : "border-slate-200 hover:border-[#FF9933]"
+              }`}
+            >
+              <p className="text-sm font-bold text-slate-800">{folder}</p>
+              <p className="text-xs text-slate-500 mt-1">{folderCounts[folder] || 0} test(s)</p>
+            </button>
+          ))}
+          {otherCount > 0 && (
+            <div className="bg-amber-50 border-2 border-amber-200 rounded-xl px-3 py-3 shadow-sm">
+              <p className="text-sm font-bold text-amber-800">Other Tests</p>
+              <p className="text-xs text-amber-700 mt-1">{otherCount} to organize</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {loading ? (
         <div className="flex items-center justify-center py-20 text-slate-400">
@@ -203,8 +256,19 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
           </button>
         </div>
       ) : (
-        <div className="space-y-3">
-          {tests.map((test) => (
+        <div className="space-y-6">
+          {TEST_FOLDERS.filter((folder) => !selectedFolder || folder === selectedFolder).map((folder) => {
+            const folderTests = tests.filter((test) => getFolderName(test.subject) === folder);
+            if (folderTests.length === 0) return null;
+            return (
+              <section key={folder}>
+                <div className="flex items-center gap-2 mb-3">
+                  <Folder className="w-5 h-5 text-[#FF9933]" />
+                  <h3 className="text-base font-bold text-slate-800">{folder}</h3>
+                  <span className="text-xs text-slate-500">{folderTests.length} test(s)</span>
+                </div>
+                <div className="space-y-3">
+                  {folderTests.map((test) => (
             <div key={test.id} className="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-5 hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between gap-3">
                 <button onClick={() => onEditTest(test)} className="text-left flex-1 min-w-0">
@@ -224,6 +288,19 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
                   </div>
                 </button>
                 <div className="flex items-center gap-1 flex-shrink-0">
+                  <select
+                    value={TEST_FOLDERS.includes(getFolderName(test.subject)) ? getFolderName(test.subject) : ""}
+                    onChange={(event) => moveTest(test, event.target.value)}
+                    aria-label={`Move ${test.title} to folder`}
+                    className="max-w-[120px] rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-semibold text-slate-600 focus:outline-none focus:ring-2 focus:ring-[#FF9933]"
+                  >
+                    <option value="" disabled>Move to...</option>
+                    {TEST_FOLDERS.map((option) => <option key={option} value={option}>{option}</option>)}
+                  </select>
+                  <button onClick={() => shareTest(test)} className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-slate-500 hover:bg-green-50 hover:text-green-700 transition-colors text-xs font-semibold" title="Copy student share link">
+                    <Share2 className="w-4 h-4" />
+                    <span className="hidden sm:inline">{copiedTestId === test.id ? "Copied" : "Share"}</span>
+                  </button>
                   <button onClick={() => onEditTest(test)} className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-blue-600 transition-colors" title="Edit">
                     <Edit2 className="w-4 h-4" />
                   </button>
@@ -236,7 +313,36 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
                 </div>
               </div>
             </div>
-          ))}
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+          {otherCount > 0 && (
+            <section>
+              <div className="flex items-center gap-2 mb-3">
+                <Folder className="w-5 h-5 text-amber-600" />
+                <h3 className="text-base font-bold text-slate-800">Other Tests</h3>
+                <span className="text-xs text-amber-700">Move these into a folder</span>
+              </div>
+              <div className="space-y-3">
+                {tests.filter((test) => getFolderName(test.subject) === "Other Tests").map((test) => (
+                  <div key={test.id} className="bg-white rounded-2xl border-2 border-amber-200 shadow-sm p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-slate-800 text-base truncate">{test.title}</h3>
+                        <p className="text-sm text-slate-500 mt-1">{questionCounts[test.id] || 0} questions</p>
+                      </div>
+                      <select value="" onChange={(event) => moveTest(test, event.target.value)} aria-label={`Move ${test.title} to folder`} className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-semibold text-slate-600">
+                        <option value="" disabled>Move to...</option>
+                        {TEST_FOLDERS.map((option) => <option key={option} value={option}>{option}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       )}
 
@@ -253,13 +359,14 @@ function TestsManager({ onEditTest }: { onEditTest: (test: TestRow) => void }) {
 function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) {
   const [form, setForm] = useState({
     title: "", subject: "", topic: "", class_name: "Class 10th", session: "2026–2027",
-    duration_minutes: 90, prepared_by: "",
+    duration_minutes: "", prepared_by: "",
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   const handleSave = async () => {
     if (!form.title.trim()) { setError("Test title is required"); return; }
+    if (!form.duration_minutes || Number(form.duration_minutes) < 1) { setError("Duration must be at least 1 minute"); return; }
     setSaving(true);
     const { error } = await supabase.from("tests").insert({
       title: form.title.trim(),
@@ -267,7 +374,7 @@ function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreate
       topic: form.topic.trim(),
       class_name: form.class_name.trim(),
       session: form.session.trim(),
-      duration_minutes: form.duration_minutes,
+      duration_minutes: Number(form.duration_minutes),
       prepared_by: form.prepared_by.trim(),
       is_active: true,
     });
@@ -279,7 +386,7 @@ function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreate
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative z-10 bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 px-6 py-5 flex items-center justify-between">
           <h3 className="text-xl font-bold text-slate-800 odia-text">ନୂଆ ଟେଷ୍ଟ ତିଆରି</h3>
           <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
@@ -287,8 +394,8 @@ function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreate
         <div className="p-6 space-y-4">
           <AdminField label="Test Title" placeholder="e.g., English Mock Test — At the High School" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
           <div className="grid grid-cols-2 gap-3">
-            <AdminField label="Subject" placeholder="English" value={form.subject} onChange={(v) => setForm({ ...form, subject: v })} />
-            <AdminField label="Topic" placeholder="At the High School" value={form.topic} onChange={(v) => setForm({ ...form, topic: v })} />
+            <FolderSelect value={form.subject} onChange={(value) => setForm({ ...form, subject: value })} />
+            <AdminField label="Unit" placeholder="Unit-1" value={form.topic} onChange={(v) => setForm({ ...form, topic: v })} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <AdminField label="Class" placeholder="Class 10th" value={form.class_name} onChange={(v) => setForm({ ...form, class_name: v })} />
@@ -301,7 +408,7 @@ function CreateTestModal({ onClose, onCreated }: { onClose: () => void; onCreate
                 type="number"
                 min={1}
                 value={form.duration_minutes}
-                onChange={(e) => setForm({ ...form, duration_minutes: parseInt(e.target.value) || 90 })}
+                onChange={(e) => setForm({ ...form, duration_minutes: e.target.value })}
                 className="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
               />
             </div>
@@ -331,6 +438,22 @@ function AdminField({ label, placeholder, value, onChange }: { label: string; pl
         placeholder={placeholder}
         className="odia-input w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
       />
+    </div>
+  );
+}
+
+function FolderSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-slate-600 mb-1.5">Subject Folder</label>
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="w-full cursor-pointer px-3 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
+      >
+        <option value="">Select a folder</option>
+        {TEST_FOLDERS.map((folder) => <option key={folder} value={folder}>{folder}</option>)}
+      </select>
     </div>
   );
 }
@@ -376,8 +499,8 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
           <div className="min-w-0">
             <h2 className="text-2xl font-bold text-slate-800 odia-text">{test.title}</h2>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-slate-500 mt-1.5">
-              {test.subject && <span className="flex items-center gap-1.5 odia-text"><BookOpen className="w-4 h-4" /> {test.subject}</span>}
-              {test.topic && <span className="odia-text">{test.topic}</span>}
+              {test.subject && <span className="flex items-center gap-1.5 odia-text"><BookOpen className="w-4 h-4" /> Folder: {test.subject}</span>}
+              {test.topic && <span className="odia-text">Unit: {test.topic}</span>}
               <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {test.duration_minutes} min</span>
               <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {test.session}</span>
             </div>
@@ -588,7 +711,7 @@ function QuestionModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative z-10 bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 px-6 py-5 flex items-center justify-between">
           <h3 className="text-xl font-bold text-slate-800 odia-text">{existing ? "ପ୍ରଶ୍ନ ସମ୍ପାଦନ" : "ନୂଆ ପ୍ରଶ୍ନ"}</h3>
           <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
@@ -700,8 +823,8 @@ function EditTestModal({ test, onClose, onSaved }: { test: TestRow; onClose: () 
         <div className="p-6 space-y-4">
           <AdminField label="Test Title" placeholder="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
           <div className="grid grid-cols-2 gap-3">
-            <AdminField label="Subject" placeholder="English" value={form.subject} onChange={(v) => setForm({ ...form, subject: v })} />
-            <AdminField label="Topic" placeholder="Topic" value={form.topic} onChange={(v) => setForm({ ...form, topic: v })} />
+            <FolderSelect value={form.subject} onChange={(value) => setForm({ ...form, subject: value })} />
+            <AdminField label="Unit" placeholder="Unit-1" value={form.topic} onChange={(v) => setForm({ ...form, topic: v })} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <AdminField label="Class" placeholder="Class 10th" value={form.class_name} onChange={(v) => setForm({ ...form, class_name: v })} />
