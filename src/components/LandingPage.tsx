@@ -1,5 +1,5 @@
 import React from "react";
-import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap, Sparkles } from "lucide-react";
+import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap } from "lucide-react";
 import logo from "@/images/JJLogo.jpeg";
 import heroLogo from "@/images/logo.jpeg";
 

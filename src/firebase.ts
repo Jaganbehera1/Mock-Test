@@ -175,9 +175,9 @@ class FirebaseQuery<T extends Record<string, unknown> = Record<string, unknown>>
 
   private async matchingKeys() {
     const snapshot = await get(ref(database, this.table));
-    return Object.entries(snapshot.val() || {}).filter(([, value]) => {
+    return Object.entries(snapshot.val() || {}).filter(([key, value]) => {
       const row = value as Record<string, unknown>;
-      return this.filters.every(([column, expected]) => row[column] === expected);
+      return this.filters.every(([column, expected]) => (column === "id" ? key : row[column]) === expected);
     }).map(([key]) => key);
   }
 }

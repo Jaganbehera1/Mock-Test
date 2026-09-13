@@ -729,10 +729,11 @@ function TestScreen({
                   {currentQuestion.question_text}
                 </h2>
                 {currentQuestion.image_url && (
-                  <div className="flex h-[112px] w-[88px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-1.5 sm:h-[140px] sm:w-[110px]">
+                  <div className="flex h-[224px] w-[176px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-2 sm:h-[280px] sm:w-[220px]">
                     <img
                       src={currentQuestion.image_url}
                       alt={`Diagram for question ${currentIndex + 1}`}
+                      onError={(event) => { event.currentTarget.style.display = "none"; }}
                       className="max-h-full max-w-full rounded object-contain"
                     />
                   </div>

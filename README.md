@@ -33,3 +33,14 @@ This recreates the English test with 100 questions and the Geography Resources t
 ## Admin authentication
 
 Enable **Email/Password** under Firebase Authentication, then create the admin user there using the admin email and password. The app signs in through Firebase Auth; admin passwords are never stored in source code, `.env`, or the browser bundle. Keep the local `.env` file uncommitted; it is ignored by Git.
+
+## Cloudinary question images
+
+Question images are uploaded directly from the browser to Cloudinary. Configure these Vite variables in every build environment:
+
+```text
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+VITE_CLOUDINARY_UPLOAD_PRESET=your_unsigned_upload_preset
+```
+
+For Netlify, add both variables under **Site configuration → Environment variables**, then trigger a new deploy. Netlify does not use the local `.env` file during its build. The upload preset must be an unsigned preset, and its allowed image formats and size must include PNG, JPG, and WEBP files.

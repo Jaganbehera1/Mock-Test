@@ -542,7 +542,16 @@ function TestEditor({ test, onBack }: { test: TestRow; onBack: () => void }) {
                   {idx + 1}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="odia-text text-base font-semibold text-slate-800 mb-3">{q.question_text}</p>
+                  <div className="flex items-start gap-3 mb-3">
+                    <p className="odia-text text-base font-semibold text-slate-800 flex-1">{q.question_text}</p>
+                    {q.image_url && (
+                      <img
+                        src={q.image_url}
+                        alt="Question diagram"
+                        className="h-32 w-32 flex-shrink-0 rounded-lg border border-slate-200 bg-slate-50 object-contain p-1"
+                      />
+                    )}
+                  </div>
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     {[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, i) => (
                       <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-xl ${
@@ -644,13 +653,22 @@ function QuestionModal({
   const [imageUrl, setImageUrl] = useState(existing?.image_url || "");
   const [imagePreview, setImagePreview] = useState(existing?.image_url || "");
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview.startsWith("blob:")) URL.revokeObjectURL(imagePreview);
+    };
+  }, [imagePreview]);
+
   const handleImageChange = (file: File | undefined) => {
     if (!file) return;
     if (!file.type.startsWith("image/")) { setError("Please select an image file."); return; }
     if (file.size > MAX_QUESTION_IMAGE_BYTES) { setError("Image must be 5 MB or smaller."); return; }
     setError("");
     setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
+    setImagePreview((currentPreview) => {
+      if (currentPreview.startsWith("blob:")) URL.revokeObjectURL(currentPreview);
+      return URL.createObjectURL(file);
+    });
   };
 
   const removeImage = () => {
@@ -731,7 +749,12 @@ function QuestionModal({
             <label className="block text-xs font-semibold text-slate-600 mb-1.5">Diagram or Question Image <span className="font-normal text-slate-400">(optional)</span></label>
             {imagePreview ? (
               <div className="rounded-xl border-2 border-slate-200 p-3 bg-slate-50">
-                <img src={imagePreview} alt="Question diagram preview" className="max-h-52 w-auto max-w-full rounded-lg object-contain mx-auto" />
+                <img
+                  src={imagePreview}
+                  alt="Question diagram preview"
+                  onError={() => setError("The image preview could not be loaded. Please choose the image again.")}
+                  className="max-h-52 w-auto max-w-full rounded-lg object-contain mx-auto"
+                />
                 <div className="flex items-center justify-between gap-3 mt-3">
                   <span className="text-xs text-slate-500 truncate">{imageFile?.name || "Current question image"}</span>
                   <button type="button" onClick={removeImage} className="text-xs font-semibold text-red-600 hover:underline">Remove image</button>
