@@ -7,6 +7,7 @@ import footerAnimation from "@/images/footer-animation.png";
 import climbingStudent from "@/images/boy-Climbing.png";
 import readingStudent from "@/images/girl-reading.png";
 import heroVideo from "@/images/videoplayback.webm";
+import jaganLogo from "@/images/jaganlogo.jpg";
 
 const CONTACT_NUMBER = "7978966065";
 const whatsappMessage = encodeURIComponent("I want to develop one application please contact me");
@@ -79,7 +80,7 @@ export function LandingPage({
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(320px,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)_minmax(0,0.8fr)] lg:gap-8 xl:gap-12">
             {/* Hero Image - FIRST on mobile, LEFT on desktop */}
             <div className="flex items-center justify-center lg:justify-start order-1 lg:order-1">
               <div className="relative">
@@ -178,6 +179,20 @@ export function LandingPage({
                 </span>
               </div>
             </div>
+
+            {/* Jagan logo - THIRD on mobile, RIGHT on desktop */}
+            <div className="flex items-center justify-center order-3 lg:order-3 lg:justify-end">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-3xl bg-black blur-2xl scale-95"></div>
+                <div className="relative rounded-3xl bg-black p-2 shadow-2xl border-2 border-black">
+                  <img
+                    src={jaganLogo}
+                    alt="Jagan's Online Test"
+                    className="landing-float-delay h-auto max-h-[420px] w-auto max-w-[240px] rounded-2xl object-contain sm:max-h-[500px] sm:max-w-[280px] lg:max-h-[560px] lg:max-w-[300px]"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -185,7 +200,7 @@ export function LandingPage({
       {/* Full-width video below the image and text */}
       <div className="overflow-hidden bg-black py-3 sm:py-4">
         <div className="landing-video-marquee whitespace-nowrap text-center text-base font-bold uppercase tracking-[0.16em] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] sm:text-xl lg:text-2xl">
-          JITAN'S ONLINE MOCK TEST FOR ODISHA 10th BOARD EXAM
+          JITAN'S ONLINE TEST FOR ODISHA 10th BOARD EXAM
           <br />
           For website development contact - 7978966065
         </div>
