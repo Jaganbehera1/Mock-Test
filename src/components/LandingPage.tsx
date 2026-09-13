@@ -20,16 +20,16 @@ export function LandingPage({
   onAdmin: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black text-white">
       {/* Top Indian Flag Banner */}
       <div className="h-1.5 w-full flex sticky top-0 z-50">
         <div className="h-full w-1/3 bg-[#FF9933]"></div>
-        <div className="h-full w-1/3 bg-white"></div>
+        <div className="h-full w-1/3 bg-black"></div>
         <div className="h-full w-1/3 bg-[#138808]"></div>
       </div>
 
       {/* Navbar */}
-      <nav className="sticky top-1.5 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+      <nav className="sticky top-1.5 z-40 bg-black/90 backdrop-blur-md border-b border-white/10 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src={logo} alt="Jitan logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
@@ -37,7 +37,7 @@ export function LandingPage({
               <span className="text-xl font-bold bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
                 JITAN
               </span>
-              <span className="text-xl font-bold text-gray-800">'S Online Test</span>
+              <span className="text-xl font-bold text-white">'S Online Test</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -220,7 +220,7 @@ export function LandingPage({
       </div>
 
       {/* Features Grid - Light Theme */}
-      <div className="py-20 relative bg-white">
+      <div className="py-20 relative bg-black">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/20 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#138808]/20 to-transparent"></div>
@@ -236,19 +236,19 @@ export function LandingPage({
             </div>
             <div className="text-center lg:text-left">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#FF9933]">Learn. Practice. Achieve.</p>
-              <h2 className="text-3xl font-bold text-gray-900 mt-2 mb-3">
+              <h2 className="text-3xl font-bold text-white mt-2 mb-3">
                 Built to help every student move forward
               </h2>
-              <p className="text-gray-600 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+              <p className="text-slate-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
                 Practice with focused mock tests, understand your progress, and build confidence for every exam.
               </p>
             </div>
           </div>
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">
+            <h2 className="text-3xl font-bold text-white mb-3">
               Why Choose <span className="text-[#FF9933]">JITAN</span> Online Test?
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-slate-300 max-w-2xl mx-auto">
               Everything you need for a seamless online examination experience
             </p>
           </div>
@@ -283,7 +283,7 @@ export function LandingPage({
       </div>
 
       {/* How It Works - Light Tricolor Background */}
-      <div className="py-20 relative bg-gradient-to-br from-orange-50/50 via-white to-green-50/50">
+      <div className="py-20 relative bg-black">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/20 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#138808]/20 to-transparent"></div>
@@ -298,10 +298,10 @@ export function LandingPage({
         </div>
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">
+            <h2 className="text-3xl font-bold text-white mb-3">
               How It <span className="text-[#138808]">Works</span>
             </h2>
-            <p className="text-gray-600">Three simple steps to start your online test</p>
+            <p className="text-slate-300">Three simple steps to start your online test</p>
           </div>
           <div className="grid items-center gap-8 md:grid-cols-[120px_minmax(0,1fr)_120px] lg:gap-12">
             <div className="flex justify-center">
@@ -335,47 +335,47 @@ export function LandingPage({
       </div>
 
       {/* Stats Section - Light Cards */}
-      <div className="py-20 relative bg-white">
+      <div className="py-20 relative bg-black">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/20 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#138808]/20 to-transparent"></div>
         </div>
         <div className="relative max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100/30 border border-orange-200/30 shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-[#FF9933]/15 to-black border border-[#FF9933]/30 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center mx-auto mb-3">
                 <Trophy className="w-6 h-6 text-[#FF9933]" />
               </div>
-              <div className="text-3xl font-bold text-gray-900">500+</div>
-              <div className="text-sm text-gray-600">Tests Created</div>
+              <div className="text-3xl font-bold text-white">500+</div>
+              <div className="text-sm text-slate-300">Tests Created</div>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100/30 border border-green-200/30 shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-[#138808]/15 to-black border border-[#138808]/30 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-full bg-[#138808]/10 flex items-center justify-center mx-auto mb-3">
                 <Users className="w-6 h-6 text-[#138808]" />
               </div>
-              <div className="text-3xl font-bold text-gray-900">10K+</div>
-              <div className="text-sm text-gray-600">Students</div>
+              <div className="text-3xl font-bold text-white">10K+</div>
+              <div className="text-sm text-slate-300">Students</div>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100/30 border border-blue-200/30 shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-blue-500/15 to-black border border-blue-400/30 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-3">
                 <BarChart3 className="w-6 h-6 text-blue-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900">98%</div>
-              <div className="text-sm text-gray-600">Satisfaction</div>
+              <div className="text-3xl font-bold text-white">98%</div>
+              <div className="text-sm text-slate-300">Satisfaction</div>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100/30 border border-purple-200/30 shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-purple-500/15 to-black border border-purple-400/30 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto mb-3">
                 <Zap className="w-6 h-6 text-purple-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900">24/7</div>
-              <div className="text-sm text-gray-600">Support</div>
+              <div className="text-3xl font-bold text-white">24/7</div>
+              <div className="text-sm text-slate-300">Support</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer - Light Indian Theme */}
-      <div className="bg-gray-50 border-t-2 border-[#FF9933]/30 py-8 relative">
+      <div className="bg-black border-t-2 border-[#FF9933]/30 py-8 relative">
         <div className="max-w-6xl mx-auto px-4 text-center relative">
           <img
             src={footerAnimation}
@@ -386,10 +386,10 @@ export function LandingPage({
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF9933] via-white to-[#138808] flex items-center justify-center text-white font-bold text-xs shadow-sm">
               🇮🇳
             </div>
-            <span className="text-sm text-gray-600 font-medium">Proudly Indian · Made for Indian Education</span>
+            <span className="text-sm text-slate-300 font-medium">Proudly Indian · Made for Indian Education</span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500 mb-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-300 mb-4">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#138808]" />
               Question Prepared By: ASTARANG HIGH SCHOOL, ASTARANG
@@ -446,9 +446,9 @@ function FeatureCard({
   color: string;
 }) {
   const colorStyles = {
-    orange: "from-[#FF9933]/5 to-orange-50/80 border-[#FF9933]/20 text-[#FF9933]",
-    green: "from-[#138808]/5 to-green-50/80 border-[#138808]/20 text-[#138808]",
-    blue: "from-blue-50/50 to-blue-100/30 border-blue-200/30 text-blue-600",
+    orange: "from-[#FF9933]/15 to-black border-[#FF9933]/40 text-[#FF9933]",
+    green: "from-[#138808]/15 to-black border-[#138808]/40 text-[#138808]",
+    blue: "from-blue-500/15 to-black border-blue-400/40 text-blue-300",
   };
 
   return (
@@ -456,8 +456,8 @@ function FeatureCard({
       <div className={`w-12 h-12 rounded-xl bg-current/10 flex items-center justify-center mb-4`}>
         <div className="text-current">{icon}</div>
       </div>
-      <h3 className="font-bold text-gray-800 text-base mb-2">{title}</h3>
-      <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
+      <h3 className="font-bold text-white text-base mb-2">{title}</h3>
+      <p className="text-sm text-slate-300 leading-relaxed">{description}</p>
     </div>
   );
 }
@@ -484,8 +484,8 @@ function Step({
       >
         {number}
       </div>
-      <h3 className="font-bold text-gray-800 text-lg mb-2">{title}</h3>
-      <p className="text-sm text-gray-600 leading-relaxed max-w-xs mx-auto">{description}</p>
+      <h3 className="font-bold text-white text-lg mb-2">{title}</h3>
+      <p className="text-sm text-slate-300 leading-relaxed max-w-xs mx-auto">{description}</p>
     </div>
   );
 }
