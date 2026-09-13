@@ -1,11 +1,12 @@
 import React from "react";
 import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap } from "lucide-react";
 import logo from "@/images/JJLogo.jpeg";
-import heroLogo from "@/images/logo.jpeg";
+import heroLogo from "@/images/hbuac.jpg";
 import awardsImage from "@/images/awards.png";
 import footerAnimation from "@/images/footer-animation.png";
 import climbingStudent from "@/images/boy-Climbing.png";
 import readingStudent from "@/images/girl-reading.png";
+import heroVideo from "@/images/videoplayback.webm";
 
 const CONTACT_NUMBER = "7978966065";
 const whatsappMessage = encodeURIComponent("I want to develop one application please contact me");
@@ -57,17 +58,17 @@ export function LandingPage({
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-green-50">
+      {/* Image and text section */}
+      <div className="relative overflow-hidden bg-black">
         {/* Decorative background circles */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-0 w-96 h-96 bg-[#FF9933]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#138808]/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-[#FF9933]/3 rounded-full blur-3xl"></div>
         </div>
 
         {/* Ashoka Chakra decorative element */}
-        <div className="absolute right-10 top-20 opacity-[0.03] hidden lg:block">
+        <div className="pointer-events-none absolute right-10 top-20 opacity-[0.03] hidden lg:block">
           <div className="w-64 h-64 rounded-full border-4 border-[#000080] flex items-center justify-center">
             <div className="w-48 h-48 rounded-full border-4 border-[#000080] flex items-center justify-center">
               <div className="w-32 h-32 rounded-full border-4 border-[#000080] flex items-center justify-center">
@@ -77,18 +78,18 @@ export function LandingPage({
           </div>
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 sm:py-16 lg:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(320px,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
             {/* Hero Image - FIRST on mobile, LEFT on desktop */}
             <div className="flex items-center justify-center lg:justify-start order-1 lg:order-1">
               <div className="relative">
-                {/* Glow effect behind image */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#FF9933]/20 via-white/40 to-[#138808]/20 rounded-3xl blur-2xl scale-95"></div>
+                {/* Pure black image surround */}
+                <div className="absolute inset-0 rounded-3xl bg-black blur-2xl scale-95"></div>
                 {/* Decorative rings */}
                 <div className="absolute -inset-4 rounded-full border-2 border-[#FF9933]/20 animate-pulse hidden sm:block"></div>
                 <div className="absolute -inset-8 rounded-full border border-[#138808]/10 hidden sm:block"></div>
                 {/* Main image */}
-                <div className="relative bg-white rounded-3xl shadow-2xl p-2 border border-slate-200/60">
+                <div className="relative rounded-3xl bg-black p-2 shadow-2xl border-2 border-black">
                   <img
                     src={heroLogo}
                     alt="JITAN Online Test Platform"
@@ -100,7 +101,7 @@ export function LandingPage({
 
             {/* Text Content - SECOND on mobile, RIGHT on desktop */}
             <div className="text-center lg:text-left order-2 lg:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 leading-tight">
                 <span className="text-[#FF9933]">MISSION - </span>
                 
                 <span className="bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
@@ -122,7 +123,7 @@ export function LandingPage({
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 leading-tight">
                 <span className="text-[#FF9933]">JITAN'S</span>
                 <br />
                 <span className="bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
@@ -139,7 +140,7 @@ export function LandingPage({
               <p className="text-[#FF9933] text-base sm:text-lg font-semibold mb-2">
                 For Class 10th &middot; 2026–2027 Session
               </p>
-              <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 A professional online examination platform for schools — take mock tests,
                 track student performance, and manage question banks with ease.
               </p>
@@ -162,7 +163,7 @@ export function LandingPage({
                 </button>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-500">
+              <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-slate-300">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-[#138808]" />
                   Secure Platform
@@ -179,6 +180,28 @@ export function LandingPage({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Full-width video below the image and text */}
+      <div className="overflow-hidden bg-black py-3 sm:py-4">
+        <div className="landing-video-marquee whitespace-nowrap text-center text-base font-bold uppercase tracking-[0.16em] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] sm:text-xl lg:text-2xl">
+          JITAN'S ONLINE MOCK TEST FOR ODISHA 10th BOARD EXAM
+          <br />
+          For website development contact - 7978966065
+        </div>
+      </div>
+      <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+          aria-label="JITAN educational background video"
+        >
+          <source src={heroVideo} type="video/webm" />
+        </video>
       </div>
 
       {/* Features Grid - Light Theme */}
@@ -267,7 +290,7 @@ export function LandingPage({
           </div>
           <div className="grid items-center gap-8 md:grid-cols-[120px_minmax(0,1fr)_120px] lg:gap-12">
             <div className="flex justify-center">
-              <img src={climbingStudent} alt="Student reaching a goal" className="landing-float h-36 w-auto object-contain sm:h-44 md:h-52" />
+              <img src={climbingStudent} alt="Student reaching a goal" className="landing-float h-full w-auto object-contain sm:h-100 md:h-100" />
             </div>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               <Step
@@ -290,7 +313,7 @@ export function LandingPage({
               />
             </div>
             <div className="flex justify-center">
-              <img src={readingStudent} alt="Student studying for an exam" className="landing-float-delay h-28 w-auto object-contain sm:h-36 md:h-44" />
+              <img src={readingStudent} alt="Student studying for an exam" className="landing-float-delay h-full w-auto object-contain sm:h-100 md:h-100" />
             </div>
           </div>
         </div>

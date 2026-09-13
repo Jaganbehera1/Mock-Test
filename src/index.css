@@ -38,6 +38,15 @@
 	}
 }
 
+@keyframes landing-video-marquee {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
 .landing-float {
 	animation: landing-float 6s ease-in-out infinite;
 }
@@ -54,11 +63,16 @@
 	animation: landing-award-rotate 4.5s ease-in-out infinite;
 }
 
+.landing-video-marquee {
+	animation: landing-video-marquee 16s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.landing-float,
 	.landing-float-delay,
 	.landing-float-soft,
-	.landing-award-rotate {
+	.landing-award-rotate,
+	.landing-video-marquee {
 		animation: none;
 	}
 }
