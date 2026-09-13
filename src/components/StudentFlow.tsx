@@ -114,12 +114,11 @@ function RegistrationScreen({
       setError("Please enter your school name");
       return;
     }
-    setError("");
     onComplete({ name: name.trim(), roll: roll.trim(), school: school.trim() });
   };
 
   return (
-    <div className="min-h-[calc(100vh-49px)] flex items-center justify-center p-4 bg-gradient-to-br from-orange-50 via-white to-green-50">
+    <div className="kalinga-font min-h-[calc(100vh-49px)] flex items-center justify-center p-4 bg-gradient-to-br from-orange-50 via-white to-green-50">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
           <div className="bg-gradient-to-r from-[#FF9933] via-[#FFB347] to-[#138808] px-6 py-8 text-center">
@@ -226,7 +225,6 @@ function TestSelectScreen({
   const onSelectRef = useRef(onSelect);
 
   onSelectRef.current = onSelect;
-
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -269,7 +267,7 @@ function TestSelectScreen({
   const units = Array.from(new Set(folderTests.map((test) => test.topic.trim() || "General Tests")));
 
   return (
-    <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
+    <div className="kalinga-font min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
         {/* Student info banner */}
         <div className="bg-white border border-slate-200 rounded-xl p-4 mb-6 flex items-center gap-3 shadow-sm">
@@ -648,7 +646,7 @@ function TestScreen({
   const totalQuestions = questions.length;
 
   return (
-    <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50">
+    <div className="kalinga-font min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50">
       {/* Header */}
       <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
@@ -1040,7 +1038,7 @@ function ResultScreen({
   };
 
   return (
-    <div className="min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
+    <div className="kalinga-font min-h-[calc(100vh-49px)] bg-gradient-to-br from-orange-50 via-white to-green-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
         {/* Score Card */}
         <div className={`bg-white rounded-2xl border-2 shadow-lg overflow-hidden ${passed ? "border-[#138808]/30" : "border-red-200"}`}>
