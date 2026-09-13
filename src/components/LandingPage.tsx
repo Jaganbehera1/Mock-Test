@@ -2,6 +2,10 @@ import React from "react";
 import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap } from "lucide-react";
 import logo from "@/images/JJLogo.jpeg";
 import heroLogo from "@/images/logo.jpeg";
+import awardsImage from "@/images/awards.png";
+import footerAnimation from "@/images/footer-animation.png";
+import climbingStudent from "@/images/boy-Climbing.png";
+import readingStudent from "@/images/girl-reading.png";
 
 const CONTACT_NUMBER = "7978966065";
 const whatsappMessage = encodeURIComponent("I want to develop one application please contact me");
@@ -88,7 +92,7 @@ export function LandingPage({
                   <img
                     src={heroLogo}
                     alt="JITAN Online Test Platform"
-                    className="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] h-auto rounded-2xl object-cover"
+                    className="landing-float h-auto max-h-[420px] w-auto max-w-[280px] rounded-2xl object-contain sm:max-h-[500px] sm:max-w-[340px] lg:max-h-[560px] lg:max-w-[380px]"
                   />
                 </div>
               </div>
@@ -96,15 +100,25 @@ export function LandingPage({
 
             {/* Text Content - SECOND on mobile, RIGHT on desktop */}
             <div className="text-center lg:text-left order-2 lg:order-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4 leading-tight">
+                <span className="text-[#FF9933]">MISSION - </span>
+                
+                <span className="bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
+                  A1 For 10th Odisha Board Exam
+                </span>
+              </h1>
               <div className="flex items-center justify-center gap-3 mb-6 flex-wrap lg:justify-start">
                 <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FF9933]/10 text-[#FF9933] text-xs font-semibold border border-[#FF9933]/20">
                   🇮🇳 Made in India
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#138808]/10 text-[#138808] text-xs font-semibold border border-[#138808]/20">
-                  For Indian Students
+                  Target All Pass
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold border border-blue-200">
                   🎯 BSE, Odisha
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-green-50 text-red-600 text-xs font-semibold border border-green-200">
+                  No Fear Of Data Leakage
                 </span>
               </div>
 
@@ -174,6 +188,24 @@ export function LandingPage({
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#138808]/20 to-transparent"></div>
         </div>
         <div className="relative max-w-6xl mx-auto px-4">
+          <div className="grid items-center gap-10 lg:grid-cols-[220px_minmax(0,1fr)] mb-12">
+            <div className="flex justify-center">
+              <img
+                src={awardsImage}
+                alt="Achievement award trophy"
+                className="landing-award-rotate h-48 w-auto object-contain drop-shadow-xl sm:h-56"
+              />
+            </div>
+            <div className="text-center lg:text-left">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#FF9933]">Learn. Practice. Achieve.</p>
+              <h2 className="text-3xl font-bold text-gray-900 mt-2 mb-3">
+                Built to help every student move forward
+              </h2>
+              <p className="text-gray-600 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                Practice with focused mock tests, understand your progress, and build confidence for every exam.
+              </p>
+            </div>
+          </div>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-3">
               Why Choose <span className="text-[#FF9933]">JITAN</span> Online Test?
@@ -233,25 +265,33 @@ export function LandingPage({
             </h2>
             <p className="text-gray-600">Three simple steps to start your online test</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Step
-              number="1"
-              title="Register"
-              description="Students enter their name, roll number, and school name."
-              color="#FF9933"
-            />
-            <Step
-              number="2"
-              title="Take the Test"
-              description="Choose a test, answer multiple-choice questions within the time limit."
-              color="#138808"
-            />
-            <Step
-              number="3"
-              title="Get Results"
-              description="See the score, grade, and review correct answers instantly."
-              color="#FF9933"
-            />
+          <div className="grid items-center gap-8 md:grid-cols-[120px_minmax(0,1fr)_120px] lg:gap-12">
+            <div className="flex justify-center">
+              <img src={climbingStudent} alt="Student reaching a goal" className="landing-float h-36 w-auto object-contain sm:h-44 md:h-52" />
+            </div>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <Step
+                number="1"
+                title="Register"
+                description="Students enter their name, roll number, and school name."
+                color="#FF9933"
+              />
+              <Step
+                number="2"
+                title="Take the Test"
+                description="Choose a test, answer multiple-choice questions within the time limit."
+                color="#138808"
+              />
+              <Step
+                number="3"
+                title="Get Results"
+                description="See the score, grade, and review correct answers instantly."
+                color="#FF9933"
+              />
+            </div>
+            <div className="flex justify-center">
+              <img src={readingStudent} alt="Student studying for an exam" className="landing-float-delay h-28 w-auto object-contain sm:h-36 md:h-44" />
+            </div>
           </div>
         </div>
       </div>
@@ -299,6 +339,11 @@ export function LandingPage({
       {/* Footer - Light Indian Theme */}
       <div className="bg-gray-50 border-t-2 border-[#FF9933]/30 py-8 relative">
         <div className="max-w-6xl mx-auto px-4 text-center relative">
+          <img
+            src={footerAnimation}
+            alt="Student ready to learn"
+            className="landing-float-soft mx-auto mb-5 h-36 w-auto object-contain sm:h-44"
+          />
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF9933] via-white to-[#138808] flex items-center justify-center text-white font-bold text-xs shadow-sm">
               🇮🇳

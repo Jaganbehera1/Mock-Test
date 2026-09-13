@@ -10,3 +10,55 @@
 		font-family: "Kalinga", "Nirmala UI", "Noto Sans Oriya", sans-serif;
 	}
 }
+
+@keyframes landing-float {
+	0%, 100% {
+		transform: translateY(0) rotate(-1deg);
+	}
+	50% {
+		transform: translateY(-10px) rotate(1deg);
+	}
+}
+
+@keyframes landing-float-soft {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-6px);
+	}
+}
+
+@keyframes landing-award-rotate {
+	0%, 100% {
+		transform: translateY(0) rotate(-3deg);
+	}
+	50% {
+		transform: translateY(-6px) rotate(3deg);
+	}
+}
+
+.landing-float {
+	animation: landing-float 6s ease-in-out infinite;
+}
+
+.landing-float-delay {
+	animation: landing-float 7.5s ease-in-out 0.8s infinite;
+}
+
+.landing-float-soft {
+	animation: landing-float-soft 6.5s ease-in-out 0.4s infinite;
+}
+
+.landing-award-rotate {
+	animation: landing-award-rotate 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.landing-float,
+	.landing-float-delay,
+	.landing-float-soft,
+	.landing-award-rotate {
+		animation: none;
+	}
+}
