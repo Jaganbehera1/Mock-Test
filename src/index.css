@@ -76,3 +76,48 @@
 		animation: none;
 	}
 }
+@keyframes landingFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes landingFloatDelay {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes landingFloatSoft {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes landingAwardRotate {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes landingVideoMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.landing-float {
+  animation: landingFloat 4s ease-in-out infinite;
+}
+
+.landing-float-delay {
+  animation: landingFloatDelay 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.landing-float-soft {
+  animation: landingFloatSoft 4s ease-in-out infinite;
+}
+
+.landing-award-rotate {
+  animation: landingAwardRotate 3s ease-in-out infinite;
+}
+
+.landing-video-marquee {
+  animation: landingVideoMarquee 20s linear infinite;
+}
