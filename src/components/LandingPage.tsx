@@ -397,7 +397,7 @@ export function LandingPage({
         <div className="max-w-6xl mx-auto px-4 text-center relative">
           <div className="grid items-center gap-6 lg:grid-cols-[180px_minmax(0,1fr)_180px] lg:gap-10">
             <div className="flex justify-center">
-              <img src={f1Image} alt="Student taking an online test" className="landing-float-soft mx-auto mb-5 h-full w-auto max-w-full object-contain sm:h-full md:h-full" />
+              <img src={f1Image} alt="Student taking an online test" className="landing-float-soft mx-auto mb-5 h-56 w-auto max-w-full object-contain sm:h-72 md:h-80" />
             </div>
             <div>
               <img
