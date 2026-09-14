@@ -2,122 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===================== Odia / Kalinga Font ===================== */
 @layer components {
-	.kalinga-font,
-	.odia-text,
-	.odia-font,
-	.odia-input {
-		font-family: "Kalinga", "Nirmala UI", "Noto Sans Oriya", sans-serif;
-	}
+  .kalinga-font,
+  .odia-text,
+  .odia-font,
+  .odia-input {
+    font-family: "Kalinga", "Nirmala UI", "Noto Sans Oriya", "Noto Sans Odia", "Mangal", "Utkal", sans-serif;
+  }
 }
 
-@keyframes landing-float {
-	0%, 100% {
-		transform: translateY(0) rotate(-1deg);
-	}
-	50% {
-		transform: translateY(-10px) rotate(1deg);
-	}
-}
-
-@keyframes landing-float-soft {
-	0%, 100% {
-		transform: translateY(0);
-	}
-	50% {
-		transform: translateY(-6px);
-	}
-}
-
-@keyframes landing-award-rotate {
-	0%, 100% {
-		transform: translateY(0) rotate(-3deg);
-	}
-	50% {
-		transform: translateY(-6px) rotate(3deg);
-	}
-}
-
-@keyframes landing-video-marquee {
-	0% {
-		transform: translateX(100%);
-	}
-	100% {
-		transform: translateX(-100%);
-	}
-}
-
-.landing-float {
-	animation: landing-float 6s ease-in-out infinite;
-}
-
-.landing-float-delay {
-	animation: landing-float 7.5s ease-in-out 0.8s infinite;
-}
-
-.landing-float-soft {
-	animation: landing-float-soft 6.5s ease-in-out 0.4s infinite;
-}
-
-.landing-award-rotate {
-	animation: landing-award-rotate 4.5s ease-in-out infinite;
-}
-
-.landing-video-marquee {
-	animation: landing-video-marquee 28s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.landing-float,
-	.landing-float-delay,
-	.landing-float-soft,
-	.landing-award-rotate,
-	.landing-video-marquee {
-		animation: none;
-	}
-}
+/* ===================== Landing Page Animations ===================== */
 @keyframes landingFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-10px) rotate(1deg); }
 }
 
 @keyframes landingFloatDelay {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-16px); }
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-14px) rotate(1deg); }
 }
 
 @keyframes landingFloatSoft {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
 
 @keyframes landingAwardRotate {
   0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
+  50%      { transform: rotate(3deg); }
 }
 
 @keyframes landingVideoMarquee {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .landing-float {
-  animation: landingFloat 4s ease-in-out infinite;
+  animation: landingFloat 6s ease-in-out infinite;
 }
 
 .landing-float-delay {
-  animation: landingFloatDelay 5s ease-in-out infinite;
-  animation-delay: 1s;
+  animation: landingFloatDelay 7.5s ease-in-out 0.8s infinite;
 }
 
 .landing-float-soft {
-  animation: landingFloatSoft 4s ease-in-out infinite;
+  animation: landingFloatSoft 6.5s ease-in-out 0.4s infinite;
 }
 
 .landing-award-rotate {
-  animation: landingAwardRotate 3s ease-in-out infinite;
+  animation: landingAwardRotate 4.5s ease-in-out infinite;
 }
 
 .landing-video-marquee {
-  animation: landingVideoMarquee 20s linear infinite;
+  display: inline-block;
+  min-width: 200%;
+  animation: landingVideoMarquee 28s linear infinite;
+}
+
+/* ===================== Accessibility ===================== */
+@media (prefers-reduced-motion: reduce) {
+  .landing-float,
+  .landing-float-delay,
+  .landing-float-soft,
+  .landing-award-rotate,
+  .landing-video-marquee {
+    animation: none;
+  }
 }

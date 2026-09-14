@@ -1,5 +1,19 @@
 import React from "react";
-import { BookOpen, Shield, ArrowRight, Clock, Award, Users, FileText, CheckCircle2, PhoneCall, MessageCircle, BarChart3, Trophy, Zap } from "lucide-react";
+import {
+  BookOpen,
+  Shield,
+  ArrowRight,
+  Clock,
+  Award,
+  Users,
+  FileText,
+  CheckCircle2,
+  PhoneCall,
+  MessageCircle,
+  BarChart3,
+  Trophy,
+  Zap,
+} from "lucide-react";
 import logo from "@/images/JJLogo.jpeg";
 import heroLogo from "@/images/hbuac.jpg";
 import awardsImage from "@/images/awards.png";
@@ -13,7 +27,9 @@ import heroVideo from "@/images/videoplayback.webm";
 import jaganLogo from "@/images/jaganlogo.jpg";
 
 const CONTACT_NUMBER = "7978966065";
-const whatsappMessage = encodeURIComponent("I want to develop one application please contact me");
+const whatsappMessage = encodeURIComponent(
+  "I want to develop one application please contact me"
+);
 
 export function LandingPage({
   onStudent,
@@ -24,18 +40,22 @@ export function LandingPage({
 }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 text-gray-800 overflow-x-hidden">
-      {/* Top Indian Flag Banner */}
+      {/* ===================== Top Indian Flag Banner ===================== */}
       <div className="h-1.5 w-full flex sticky top-0 z-50">
         <div className="h-full w-1/3 bg-[#FF9933]"></div>
         <div className="h-full w-1/3 bg-white"></div>
         <div className="h-full w-1/3 bg-[#138808]"></div>
       </div>
 
-      {/* Navbar */}
+      {/* ===================== Navbar ===================== */}
       <nav className="sticky top-1.5 z-40 bg-white/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Jitan logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
+            <img
+              src={logo}
+              alt="Jitan logo"
+              className="w-10 h-10 rounded-xl object-cover shadow-md"
+            />
             <div>
               <span className="text-xl font-bold bg-gradient-to-r from-[#FF9933] via-[#138808] to-[#FF9933] bg-clip-text text-transparent">
                 JITAN
@@ -62,9 +82,8 @@ export function LandingPage({
         </div>
       </nav>
 
-      {/* ===== HERO SECTION - BLACK BACKGROUND (THREE COLUMN) ===== */}
+      {/* ===================== HERO SECTION (BLACK) ===================== */}
       <div className="relative overflow-hidden bg-black">
-      {/* <div className="relative overflow-hidden bg-[#000080]"> */}
         {/* Tricolor glow effects */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#FF9933]/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
@@ -72,7 +91,7 @@ export function LandingPage({
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]"></div>
         </div>
 
-        {/* Ashoka Chakra decorative element */}
+        {/* Ashoka Chakra decorative */}
         <div className="pointer-events-none absolute right-10 top-20 opacity-[0.02] hidden lg:block">
           <div className="w-80 h-80 rounded-full border-4 border-[#000080] flex items-center justify-center">
             <div className="w-60 h-60 rounded-full border-4 border-[#000080] flex items-center justify-center">
@@ -112,9 +131,9 @@ export function LandingPage({
             </span>
           </div>
 
-          {/* Logo Grid - LARGER IMAGES */}
+          {/* Logo Grid */}
           <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:gap-6 lg:gap-10 lg:grid-cols-[1.2fr_auto_1.2fr] mb-12">
-            {/* Left Logo - LARGER */}
+            {/* Left Logo */}
             <div className="flex justify-center lg:justify-end order-1 lg:order-1">
               <div className="relative">
                 <div className="absolute inset-0 rounded-3xl bg-[#FF9933]/20 blur-3xl scale-90"></div>
@@ -130,6 +149,7 @@ export function LandingPage({
 
             {/* Center Content */}
             <div className="text-center order-2 lg:order-2">
+              {/* Mobile Buttons */}
               <div className="flex flex-col gap-2 sm:hidden">
                 <button
                   onClick={onStudent}
@@ -146,33 +166,34 @@ export function LandingPage({
                   Admin Panel
                 </button>
               </div>
+
+              {/* Desktop Heading */}
               <div className="hidden sm:block">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4 leading-tight">
-                <span className="text-[#FF9933]">JITAN'S</span>
-                <br />
-                <span className="bg-gradient-to-r from-[#FF9933] via-white to-[#138808] bg-clip-text text-transparent">
-                  Online Test
-                </span>
-              </h1>
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+                  <span className="text-[#FF9933]">JITAN'S</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-[#FF9933] via-white to-[#138808] bg-clip-text text-transparent">
+                    Online Test
+                  </span>
+                </h1>
 
-              {/* Tricolor divider */}
-              <div className="flex items-center justify-center gap-2 mb-6">
-                <span className="h-1.5 w-12 bg-[#FF9933] rounded-full"></span>
-                <span className="h-1.5 w-12 bg-white rounded-full"></span>
-                <span className="h-1.5 w-12 bg-[#138808] rounded-full"></span>
-              </div>
+                <div className="flex items-center justify-center gap-2 mb-6">
+                  <span className="h-1.5 w-12 bg-[#FF9933] rounded-full"></span>
+                  <span className="h-1.5 w-12 bg-white rounded-full"></span>
+                  <span className="h-1.5 w-12 bg-[#138808] rounded-full"></span>
+                </div>
 
-              <p className="text-[#FF9933] text-lg sm:text-xl font-bold mb-2">
-                For Class 10th · 2026–2027 Session
-              </p>
-              <p className="text-slate-300 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
-                A professional online examination platform for schools — take mock tests,
-                track student performance, and manage question banks with ease.
-              </p>
+                <p className="text-[#FF9933] text-lg sm:text-xl font-bold mb-2">
+                  For Class 10th · 2026–2027 Session
+                </p>
+                <p className="text-slate-300 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+                  A professional online examination platform for schools — take mock
+                  tests, track student performance, and manage question banks with ease.
+                </p>
               </div>
             </div>
 
-            {/* Right Logo - LARGER */}
+            {/* Right Logo */}
             <div className="flex justify-center lg:justify-start order-3">
               <div className="relative">
                 <div className="absolute inset-0 rounded-3xl bg-[#138808]/20 blur-3xl scale-90"></div>
@@ -187,7 +208,7 @@ export function LandingPage({
             </div>
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons (Desktop) */}
           <div className="hidden sm:flex flex-col sm:flex-row gap-4 justify-center max-w-md sm:max-w-none mx-auto mb-10">
             <button
               onClick={onStudent}
@@ -224,14 +245,17 @@ export function LandingPage({
         </div>
       </div>
 
-      {/* Video Section */}
+      {/* ===================== Video Marquee ===================== */}
       <div className="overflow-hidden bg-black py-3 sm:py-4 border-y border-orange-100">
-        <div className="landing-video-marquee whitespace-nowrap text-center text-base font-bold uppercase tracking-[0.16em] text-white drop-shadow-sm sm:text-xl lg:text-2xl">
-          JITAN'S ONLINE TEST FOR ODISHA 10th BOARD EXAM
-          <br />
-          For website development contact - 7978966065
+        <div className="landing-video-marquee whitespace-nowrap text-base font-bold uppercase tracking-[0.16em] text-white drop-shadow-sm sm:text-xl lg:text-2xl">
+          <span className="mx-8">JITAN'S ONLINE TEST FOR ODISHA 10th BOARD EXAM</span>
+          <span className="mx-8">For website development contact - 7978966065</span>
+          <span className="mx-8">JITAN'S ONLINE TEST FOR ODISHA 10th BOARD EXAM</span>
+          <span className="mx-8">For website development contact - 7978966065</span>
         </div>
       </div>
+
+      {/* ===================== Video ===================== */}
       <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
         <video
           autoPlay
@@ -239,6 +263,7 @@ export function LandingPage({
           loop
           playsInline
           preload="auto"
+          poster={heroLogo}
           className="pointer-events-none absolute inset-0 h-full w-full object-contain"
           aria-label="JITAN educational background video"
         >
@@ -246,7 +271,7 @@ export function LandingPage({
         </video>
       </div>
 
-      {/* ===== FEATURES SECTION - PATRIOTIC BACKGROUND ===== */}
+      {/* ===================== FEATURES SECTION ===================== */}
       <div className="py-20 relative bg-gradient-to-br from-orange-400 via-white to-green-400 border-t border-orange-100">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/30 to-transparent"></div>
@@ -264,12 +289,15 @@ export function LandingPage({
               />
             </div>
             <div className="text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#FF9933]">Learn. Practice. Achieve.</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#FF9933]">
+                Learn. Practice. Achieve.
+              </p>
               <h2 className="text-3xl font-bold text-gray-800 mt-2 mb-3">
                 Built to help every student move forward
               </h2>
               <p className="text-gray-600 max-w-2xl leading-relaxed mx-auto">
-                Practice with focused mock tests, understand your progress, and build confidence for every exam.
+                Practice with focused mock tests, understand your progress, and build
+                confidence for every exam.
               </p>
             </div>
             <div className="flex justify-center">
@@ -318,7 +346,7 @@ export function LandingPage({
         </div>
       </div>
 
-      {/* ===== HOW IT WORKS - PATRIOTIC BACKGROUND ===== */}
+      {/* ===================== HOW IT WORKS ===================== */}
       <div className="py-20 relative bg-gradient-to-br from-green-400 via-white to-orange-400 border-t border-green-100">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/30 to-transparent"></div>
@@ -341,7 +369,11 @@ export function LandingPage({
           </div>
           <div className="grid items-center gap-8 md:grid-cols-[180px_minmax(0,1fr)_180px] lg:grid-cols-[220px_minmax(0,1fr)_220px] lg:gap-12">
             <div className="flex justify-center">
-              <img src={climbingStudent} alt="Student reaching a goal" className="landing-float h-64 w-full max-w-[180px] object-contain sm:h-80 sm:max-w-[210px] lg:h-96 lg:max-w-[220px]" />
+              <img
+                src={climbingStudent}
+                alt="Student reaching a goal"
+                className="landing-float h-64 w-full max-w-[180px] object-contain sm:h-80 sm:max-w-[210px] lg:h-96 lg:max-w-[220px]"
+              />
             </div>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               <Step
@@ -364,13 +396,17 @@ export function LandingPage({
               />
             </div>
             <div className="flex justify-center">
-              <img src={readingStudent} alt="Student studying for an exam" className="landing-float-delay h-56 w-full max-w-[170px] object-contain sm:h-72 sm:max-w-[200px] lg:h-80 lg:max-w-[210px]" />
+              <img
+                src={readingStudent}
+                alt="Student studying for an exam"
+                className="landing-float-delay h-56 w-full max-w-[170px] object-contain sm:h-72 sm:max-w-[200px] lg:h-80 lg:max-w-[210px]"
+              />
             </div>
           </div>
         </div>
       </div>
 
-      {/* ===== STATS SECTION - PATRIOTIC BACKGROUND ===== */}
+      {/* ===================== STATS SECTION ===================== */}
       <div className="py-20 relative bg-gradient-to-br from-orange-400 via-white to-green-400 border-t border-orange-100">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF9933]/30 to-transparent"></div>
@@ -408,76 +444,92 @@ export function LandingPage({
             </div>
           </div>
         </div>
-      {/* </div> */}
+      </div>
 
-      {/* ===== FOOTER - PATRIOTIC BACKGROUND ===== */}
-      {/* <div className="bg-gradient-to-br from-orange-400 via-white to-green-400 border-t-2 border-[#FF9933]/30 py-8 relative"> */}
+      {/* ===================== FOOTER ===================== */}
+      <footer className="bg-gradient-to-br from-orange-400 via-white to-green-400 border-t-2 border-[#FF9933]/30 py-10 relative">
         <div className="max-w-6xl mx-auto px-4 text-center relative">
           <div className="grid items-center gap-6 lg:grid-cols-[180px_minmax(0,1fr)_180px] lg:gap-10">
+            {/* Left Illustration */}
             <div className="flex justify-center">
-              <img src={f1Image} alt="Student taking an online test" className="landing-float-soft mx-auto mb-5 h-56 w-auto max-w-full object-contain sm:h-72 md:h-80" />
+              <img
+                src={f1Image}
+                alt="Student taking an online test"
+                className="landing-float-soft h-56 w-auto max-w-full object-contain sm:h-72 md:h-80"
+              />
             </div>
+
+            {/* Center Content */}
             <div>
               <img
                 src={footerAnimation}
                 alt="Student ready to learn"
                 className="landing-float-soft mx-auto mb-5 h-56 w-auto max-w-full object-contain sm:h-72 md:h-80"
               />
+
               <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF9933] via-white to-[#138808] flex items-center justify-center text-white font-bold text-xs shadow-sm">
-              🇮🇳
-            </div>
-            <span className="text-sm text-gray-700 font-medium">Proudly Indian · Made for Indian Education</span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF9933] via-white to-[#138808] flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                  🇮🇳
+                </div>
+                <span className="text-sm text-gray-700 font-medium">
+                  Proudly Indian · Made for Indian Education
+                </span>
               </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700 mb-4">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#138808]" />
-              Question Prepared By: ASTARANG HIGH SCHOOL, ASTARANG
-            </span>
-          </div>
-          
-          <p className="text-xs text-gray-500 mb-4">
-            © 2026 Jitan's Online Test Platform · Developed by{" "}
-            <a
-              href="https://jaganwebsolutions.netlify.app"
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#FF9933] hover:text-[#e68a00] transition-colors font-medium"
-            >
-              Jagan Web Solutions
-            </a>
-          </p>
-          
+              <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700 mb-4">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#138808]" />
+                  Question Prepared By: ASTARANG HIGH SCHOOL, ASTARANG
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-500 mb-4">
+                © 2026 Jitan's Online Test Platform · Developed by{" "}
+                <a
+                  href="https://jaganwebsolutions.netlify.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#FF9933] hover:text-[#e68a00] transition-colors font-medium"
+                >
+                  Jagan Web Solutions
+                </a>
+              </p>
+
               <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
-              href={`tel:+91${CONTACT_NUMBER}`}
-              aria-label="Call Jagan Web Solutions"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-orange-200 text-sm font-semibold text-[#FF9933] hover:bg-orange-50 transition-colors shadow-sm"
-            >
-              <PhoneCall className="w-4 h-4" />
-              Call {CONTACT_NUMBER}
-            </a>
-            <a
-              href={`https://wa.me/91${CONTACT_NUMBER}?text=${whatsappMessage}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Contact Jagan Web Solutions on WhatsApp"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-green-200 text-sm font-semibold text-[#25D366] hover:bg-green-50 transition-colors shadow-sm"
-            >
-              <MessageCircle className="w-4 h-4" />
-              WhatsApp
-            </a>
+                <a
+                  href={`tel:+91${CONTACT_NUMBER}`}
+                  aria-label="Call Jagan Web Solutions"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-orange-200 text-sm font-semibold text-[#FF9933] hover:bg-orange-50 transition-colors shadow-sm"
+                >
+                  <PhoneCall className="w-4 h-4" />
+                  Call {CONTACT_NUMBER}
+                </a>
+                <a
+                  href={`https://wa.me/91${CONTACT_NUMBER}?text=${whatsappMessage}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Contact Jagan Web Solutions on WhatsApp"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-green-200 text-sm font-semibold text-[#25D366] hover:bg-green-50 transition-colors shadow-sm"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  WhatsApp
+                </a>
               </div>
             </div>
+
+            {/* Right Illustration */}
             <div className="flex justify-center">
-              <img src={testImage} alt="Student pointing toward success" className="landing-float-soft mx-auto mb-5 h-56 w-auto max-w-full object-contain sm:h-72 md:h-80" />
+              <img
+                src={testImage}
+                alt="Student pointing toward success"
+                className="landing-float-soft h-56 w-auto max-w-full object-contain sm:h-72 md:h-80"
+              />
             </div>
           </div>
         </div>
-      </div>
+      </footer>
 
-      {/* Bottom Tricolor Bar */}
+      {/* ===================== Bottom Tricolor Bar ===================== */}
       <div className="h-1.5 w-full flex">
         <div className="h-full w-1/3 bg-[#FF9933]"></div>
         <div className="h-full w-1/3 bg-white"></div>
@@ -486,6 +538,8 @@ export function LandingPage({
     </div>
   );
 }
+
+/* ===================== Sub Components ===================== */
 
 function FeatureCard({
   icon,
@@ -505,8 +559,14 @@ function FeatureCard({
   };
 
   return (
-    <div className={`bg-gradient-to-br ${colorStyles[color as keyof typeof colorStyles]} rounded-2xl border p-6 hover:shadow-lg transition-all hover:-translate-y-1`}>
-      <div className={`w-12 h-12 rounded-xl bg-current/10 flex items-center justify-center mb-4`}>
+    <div
+      className={`bg-gradient-to-br ${
+        colorStyles[color as keyof typeof colorStyles]
+      } rounded-2xl border p-6 hover:shadow-lg transition-all hover:-translate-y-1`}
+    >
+      <div
+        className={`w-12 h-12 rounded-xl bg-current/10 flex items-center justify-center mb-4`}
+      >
         <div className="text-current">{icon}</div>
       </div>
       <h3 className="font-bold text-gray-800 text-base mb-2">{title}</h3>
@@ -528,17 +588,19 @@ function Step({
 }) {
   return (
     <div className="text-center group">
-      <div 
+      <div
         className="w-16 h-16 rounded-full text-white font-bold text-2xl flex items-center justify-center mx-auto mb-4 shadow-lg transition-transform group-hover:scale-110"
-        style={{ 
+        style={{
           background: `linear-gradient(135deg, ${color}, ${color}dd)`,
-          boxShadow: `0 8px 25px ${color}40`
+          boxShadow: `0 8px 25px ${color}40`,
         }}
       >
         {number}
       </div>
       <h3 className="font-bold text-gray-800 text-lg mb-2">{title}</h3>
-      <p className="text-sm text-gray-600 leading-relaxed max-w-xs mx-auto">{description}</p>
+      <p className="text-sm text-gray-600 leading-relaxed max-w-xs mx-auto">
+        {description}
+      </p>
     </div>
   );
 }
