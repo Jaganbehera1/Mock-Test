@@ -7,7 +7,7 @@ import {
 import { firebaseDb as supabase, type TestRow, type QuestionRow, type AttemptRow } from "@/firebase";
 
 type AdminTab = "dashboard" | "tests" | "attempts";
-const TEST_FOLDERS = ["Math", "Geography", "History", "English", "Odia", "Science"];
+const TEST_FOLDERS = ["Math", "Geography", "History", "English", "Odia", "Science", "Hindi", "Sanskrit", "Computer Science", "Other Tests"];
 
 function getFolderName(subject: string) {
   const normalized = subject.trim().toLowerCase();
