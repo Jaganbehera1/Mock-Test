@@ -153,7 +153,7 @@ export function LandingPage({
               <div className="flex flex-col gap-2 sm:hidden">
                 <button
                   onClick={onStudent}
-                  className="flex items-center justify-center gap-1 rounded-lg bg-gradient-to-r from-[#FF9933] to-[#FF8C00] px-2 py-3 text-[20px] font-bold text-white shadow-lg"
+                  className="flex items-center justify-center gap-1 rounded-lg bg-gradient-to-r from-[#FF9933] to-[#FF8C00] px-2 py-3 text-[10px] font-bold text-white shadow-lg"
                 >
                   <BookOpen className="h-3.5 w-3.5" />
                   Take a Test
