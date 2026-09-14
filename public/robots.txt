@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Client-side admin, student, and test states are not stable public pages.
+Disallow: /*#admin
+Disallow: /*#student
+
+Sitemap: https://jitanmocktest.netlify.app/sitemap.xml

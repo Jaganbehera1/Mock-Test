@@ -113,23 +113,40 @@ export function LandingPage({
           </div>
 
           {/* Logo Grid - LARGER IMAGES */}
-          <div className="grid items-center gap-6 lg:gap-10 lg:grid-cols-[1.2fr_auto_1.2fr] mb-12">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:gap-6 lg:gap-10 lg:grid-cols-[1.2fr_auto_1.2fr] mb-12">
             {/* Left Logo - LARGER */}
-            <div className="flex justify-center lg:justify-end order-2 lg:order-1">
+            <div className="flex justify-center lg:justify-end order-1 lg:order-1">
               <div className="relative">
                 <div className="absolute inset-0 rounded-3xl bg-[#FF9933]/20 blur-3xl scale-90"></div>
                 <div className="relative rounded-3xl bg-black p-3 shadow-2xl border-2 border-[#FF9933]/30">
                   <img
                     src={heroLogo}
                     alt="JITAN Online Test Platform"
-                    className="landing-float h-auto max-h-[420px] w-auto max-w-[320px] rounded-2xl object-contain sm:max-h-[500px] sm:max-w-[380px] lg:max-h-[580px] lg:max-w-[440px]"
+                    className="landing-float h-auto max-h-[190px] w-auto max-w-[105px] rounded-2xl object-contain sm:max-h-[420px] sm:max-w-[320px] lg:max-h-[580px] lg:max-w-[440px]"
                   />
                 </div>
               </div>
             </div>
 
             {/* Center Content */}
-            <div className="text-center order-1 lg:order-2">
+            <div className="text-center order-2 lg:order-2">
+              <div className="flex flex-col gap-2 sm:hidden">
+                <button
+                  onClick={onStudent}
+                  className="flex items-center justify-center gap-1 rounded-lg bg-gradient-to-r from-[#FF9933] to-[#FF8C00] px-2 py-3 text-[10px] font-bold text-white shadow-lg"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  Take a Test
+                </button>
+                <button
+                  onClick={onAdmin}
+                  className="flex items-center justify-center gap-1 rounded-lg bg-gradient-to-r from-[#138808] to-[#0d6605] px-2 py-3 text-[10px] font-bold text-white shadow-lg"
+                >
+                  <Shield className="h-3.5 w-3.5" />
+                  Admin Panel
+                </button>
+              </div>
+              <div className="hidden sm:block">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4 leading-tight">
                 <span className="text-[#FF9933]">JITAN'S</span>
                 <br />
@@ -152,6 +169,7 @@ export function LandingPage({
                 A professional online examination platform for schools — take mock tests,
                 track student performance, and manage question banks with ease.
               </p>
+              </div>
             </div>
 
             {/* Right Logo - LARGER */}
@@ -162,7 +180,7 @@ export function LandingPage({
                   <img
                     src={jaganLogo}
                     alt="Jagan's Online Test"
-                    className="landing-float-delay h-auto max-h-[420px] w-auto max-w-[320px] rounded-2xl object-contain sm:max-h-[500px] sm:max-w-[380px] lg:max-h-[580px] lg:max-w-[440px]"
+                    className="landing-float-delay h-auto max-h-[190px] w-auto max-w-[105px] rounded-2xl object-contain sm:max-h-[420px] sm:max-w-[320px] lg:max-h-[580px] lg:max-w-[440px]"
                   />
                 </div>
               </div>
@@ -170,7 +188,7 @@ export function LandingPage({
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md sm:max-w-none mx-auto mb-10">
+          <div className="hidden sm:flex flex-col sm:flex-row gap-4 justify-center max-w-md sm:max-w-none mx-auto mb-10">
             <button
               onClick={onStudent}
               className="group flex items-center justify-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-[#FF9933] to-[#FF8C00] text-white font-bold text-lg shadow-2xl shadow-[#FF9933]/40 hover:shadow-[#FF9933]/60 hover:scale-105 transition-all active:scale-95"
@@ -390,10 +408,10 @@ export function LandingPage({
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
 
       {/* ===== FOOTER - PATRIOTIC BACKGROUND ===== */}
-      <div className="bg-gradient-to-br from-green-400 via-white to-orange-400 border-t-2 border-[#FF9933]/30 py-8 relative">
+      {/* <div className="bg-gradient-to-br from-orange-400 via-white to-green-400 border-t-2 border-[#FF9933]/30 py-8 relative"> */}
         <div className="max-w-6xl mx-auto px-4 text-center relative">
           <div className="grid items-center gap-6 lg:grid-cols-[180px_minmax(0,1fr)_180px] lg:gap-10">
             <div className="flex justify-center">
